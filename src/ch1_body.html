@@ -1,0 +1,83 @@
+<p class="lead" style="color:var(--muted)">為什麼學貝斯要先看鋼琴？因為鋼琴的鍵盤把「音樂只有 12 個音」這件事攤開在你眼前——白鍵、黑鍵、規律的圖案，一目了然。先在鋼琴上建立音感與觀念，之後搬到貝斯指板上就會非常順。</p>
+<div class="learn-box"><b>本章你會學到：</b>12 音循環的規律・音名（C D E F G A B 與 #/b）・全音與半音・異名同音</div>
+
+<section class="lesson" id="s1">
+  <h2>音樂只有 12 個音</h2>
+  <p>不管是嘻哈、爵士、流行還是金屬，你聽到的所有音樂，都是由 <b>12 個不同的音</b> 組成的。就像畫家用有限的顏料調出千變萬化的畫，音樂家用這 12 個音寫出所有的歌。</p>
+  <p>在鋼琴上，從任何一個 C 往右數到下一個 C（含黑鍵），正好經過 12 個琴鍵，這就是一組「12 音循環」。整台鋼琴不過是同一組循環不斷重複——越往右音越高、越往左音越低，但音名完全相同。</p>
+  <div class="panel">
+    <div class="panel-title">互動鍵盤：親手彈彈看 12 音循環</div>
+    <div id="p1-piano"></div>
+    <div class="controls">
+      <button class="btn" id="p1-play12">▶ 依序播放 12 個音</button>
+      <button class="btn secondary" id="p1-octave">▶ 聽「同一個音、不同八度」</button>
+      <button class="btn secondary" id="p1-groups">標出黑鍵 2+3 群組</button>
+      <button class="btn secondary" id="p1-clear">清除標示</button>
+    </div>
+    <div class="hint">直接點琴鍵就會發出聲音。注意聽：從 C 彈到下一個 C，音高「回到家」了，只是高了一個八度。</div>
+  </div>
+  <h3>黑鍵是你的路標</h3>
+  <p>黑鍵永遠以「<b>2 個一組、3 個一組</b>」交替出現。找到任何一組 2 個黑鍵，它左邊緊鄰的白鍵一定是 <span class="badge">C</span>——這就是每組 12 音循環的起點。學會認這個圖案，你在任何鍵盤上都不會迷路。</p>
+  <div class="panel">
+    <div class="panel-title">小測驗：找出所有的 C</div>
+    <div class="quiz-q">在下面的鍵盤上，把每一個 C 都點出來（提示：2 個黑鍵左邊的白鍵）</div>
+    <div id="p1-quizpiano"></div>
+    <div class="quiz-fb" id="p1-quizfb"></div>
+    <div class="controls"><button class="btn small secondary" id="p1-quizreset">重新開始</button></div>
+  </div>
+</section>
+
+<section class="lesson" id="s2">
+  <h2>音名：只要 7 個字母</h2>
+  <p>白鍵的名字用英文字母 <span class="badge">A</span><span class="badge">B</span><span class="badge">C</span><span class="badge">D</span><span class="badge">E</span><span class="badge">F</span><span class="badge">G</span> 循環命名，稱為<b>自然音</b>。彈到 G 之後又回到 A，跟著鍵盤圖案一起無限重複。</p>
+  <p>黑鍵則是相鄰白鍵的「變化版」：往<b>右</b>（升高半音）叫做<b>升</b>記號 <span class="badge">#</span>，例如 C 右邊的黑鍵是 C#；往<b>左</b>（降低半音）叫做<b>降</b>記號 <span class="badge">b</span>，例如 D 左邊的黑鍵是 Db。</p>
+  <div class="note"><b>異名同音（Enharmonic）：</b>C# 和 Db 其實是<b>同一個琴鍵、同一個音高</b>，只是寫法不同——就像「7 點 45 分」和「差一刻 8 點」是同一個時間。白鍵也有這種情況：E# 就是 F，Cb 就是 B。</div>
+  <div class="panel">
+    <div class="panel-title">互動：點任何鍵，看看它的名字（含異名同音）</div>
+    <div id="p2-piano"></div>
+    <div class="controls">
+      <label class="ctl">黑鍵顯示：</label>
+      <div class="seg" id="p2-nameseg"></div>
+    </div>
+    <div style="margin-top:10px;font-size:20px" class="center">你點的音：<span id="p2-picked" class="acc mono" style="font-weight:800">—</span></div>
+  </div>
+</section>
+
+<section class="lesson" id="s3">
+  <h2>全音與半音：音樂的最小步伐</h2>
+  <p>在鍵盤（或貝斯指板）上移動時，我們用兩種「步伐」來丈量距離：</p>
+  <p><b>半音（Half step / Semitone）</b>：移動到<b>緊鄰的下一個鍵</b>，不管黑白。這是西方音樂裡最小的距離。在貝斯上就是移動 <b>1 格（fret）</b>。</p>
+  <p><b>全音（Whole step / Tone）</b>：等於<b>兩個半音</b>，也就是跳過一個鍵。在貝斯上是移動 <b>2 格</b>。</p>
+  <div class="note warn"><b>兩個特別的地方：</b>E–F 之間、B–C 之間<b>沒有黑鍵</b>，它們本身就只差半音。其他相鄰白鍵（C–D、D–E、F–G、G–A、A–B）之間都隔著一個黑鍵，相差全音。這個規則之後在貝斯指板上會再出現，非常重要！</div>
+  <div class="panel">
+    <div class="panel-title">互動：聽聽半音 vs 全音的差別</div>
+    <div id="p3-piano"></div>
+    <div class="controls">
+      <label class="ctl">起點音：<select class="sel" id="p3-root"></select></label>
+      <button class="btn" id="p3-half">▶ 往上半音</button>
+      <button class="btn" id="p3-whole">▶ 往上全音</button>
+      <button class="btn secondary" id="p3-halfdown">▶ 往下半音</button>
+      <button class="btn secondary" id="p3-wholedown">▶ 往下全音</button>
+    </div>
+    <div class="hint" id="p3-desc">選一個起點音，聽聽兩種步伐的差別。半音聽起來「擠、緊張」，全音比較「開、自然」。</div>
+  </div>
+  <div class="panel">
+    <div class="panel-title">小測驗：步伐計算</div>
+    <div class="quiz-q" id="p3-qtext">載入中…</div>
+    <div class="quiz-opts" id="p3-qopts"></div>
+    <div class="quiz-fb" id="p3-qfb"></div>
+    <div class="score" id="p3-qscore"></div>
+  </div>
+</section>
+
+<section class="lesson">
+  <h2>本章重點</h2>
+  <table class="tbl">
+    <tr><th>觀念</th><th>一句話記住</th></tr>
+    <tr><td>12 音循環</td><td>所有音樂只用 12 個音，在鍵盤上不斷重複。</td></tr>
+    <tr><td>黑鍵群組</td><td>2+3 交替出現；2 個黑鍵左邊的白鍵是 C。</td></tr>
+    <tr><td>音名</td><td>白鍵 A–G 循環；黑鍵用 #（升）或 b（降）。</td></tr>
+    <tr><td>異名同音</td><td>C# = Db，同一個音、兩種寫法。</td></tr>
+    <tr><td>半音／全音</td><td>半音＝緊鄰的鍵（貝斯 1 格）；全音＝兩個半音（貝斯 2 格）。E–F、B–C 天生只差半音。</td></tr>
+  </table>
+</section>

@@ -1,0 +1,141 @@
+<p class="lead" style="color:var(--muted)">和弦是音樂的「厚度」來源。這一章從音程（兩個音的距離）出發，一步步蓋出各種和弦——大、小、sus、增、減、屬七、大七……並學會轉位。貝斯手雖然不常同時壓和弦，但 bassline 的本質就是「把和弦拆開來彈」，所以這章對你至關重要。</p>
+<div class="learn-box"><b>本章你會學到：</b>12 種音程與其個性・和弦公式（1-3-5…）・三和弦／七和弦／sus／增減・和弦轉位</div>
+
+<section class="lesson" id="s1">
+  <h2>音程：兩個音之間的距離</h2>
+  <p>音程（interval）就是兩個音之間相隔幾個半音。兩個音<b>先後彈</b>叫旋律音程（像唱歌的一句），<b>同時彈</b>叫和聲音程（像合唱的和音）。每種音程都有名字、也有自己的「表情」：</p>
+  <table class="tbl" id="i-table">
+    <tr><th>半音數</th><th>名稱</th><th>縮寫</th><th>聽感</th><th>試聽</th></tr>
+  </table>
+  <div class="note"><b>怎麼記音程的聲音？</b>把它連結到熟悉的旋律開頭：完全四度像婚禮進行曲的開頭兩音、完全五度像《小星星》的 1→5、大三度像 Do–Mi。多聽幾次下面的播放器，讓耳朵記住每種距離。</div>
+  <div class="panel">
+    <div class="panel-title">音程播放器：選一種距離，用耳朵記住它</div>
+    <div class="controls">
+      <div class="seg" id="i-seg"></div>
+    </div>
+    <div class="controls">
+      <label class="ctl">起點音：<select class="sel" id="i-root"></select></label>
+      <button class="btn" id="i-mel">▶ 旋律式（先後彈）</button>
+      <button class="btn" id="i-harm">▶ 和聲式（同時彈）</button>
+      <label class="ctl"><input type="checkbox" id="i-bass"> 用貝斯音色</label>
+    </div>
+    <div id="i-info" class="hint" style="font-size:15px"></div>
+    <div id="i-piano"></div>
+  </div>
+  <div class="panel">
+    <div class="panel-title">聽力測驗：這是什麼音程？</div>
+    <div class="controls">
+      <button class="btn" id="iq-new">🎲 出題</button>
+      <button class="btn secondary" id="iq-again">↻ 再聽一次</button>
+      <label class="ctl">難度：<select class="sel" id="iq-level">
+        <option value="easy">初級（P4 / P5 / P8 / M3 / m3）</option>
+        <option value="hard">進階（全部 12 種）</option>
+      </select></label>
+    </div>
+    <div class="quiz-opts" id="iq-opts"></div>
+    <div class="quiz-fb" id="iq-fb"></div>
+    <div class="score" id="iq-score"></div>
+  </div>
+  <h3>貝斯指板上的音程</h3>
+  <p>因為相鄰弦相差完全四度（5 格），指板上的音程有固定「形狀」，記住形狀就能到處搬：</p>
+  <div class="panel">
+    <div class="panel-title">互動：常用音程形狀（以 A 弦第 5 格 D 為根音）</div>
+    <div class="controls"><div class="seg" id="ib-seg"></div></div>
+    <div id="ib-board"></div>
+    <div id="ib-info" class="hint"></div>
+  </div>
+</section>
+
+<section class="lesson" id="s2">
+  <h2>和弦是怎麼蓋出來的？</h2>
+  <p>和弦＝三個以上的音<b>疊在一起</b>。最基本的蓋法：從音階中選出<b>第 1、3、5 個音</b>（1-3-5），這就是<b>三和弦（triad）</b>。例如 C 大三和弦 = C + E + G。</p>
+  <p>決定和弦「姓氏」的關鍵是<b>第 3 音</b>：大三度（4 個半音）→ 大和弦，明亮；小三度（3 個半音）→ 小和弦，憂鬱。再動第 5 音或加上第 7 音，就變出更多花樣。</p>
+  <div class="note"><b>貝斯手的視角：</b>吉他手彈和弦像「說出一個單字」，貝斯手則是「一個字母一個字母拼出來」——我們把和弦音（chord tones）拆開，一個一個彈成 bassline。所以彈根音、五音、三音、七音的能力，就是貝斯手的看家本領。這種拆開彈的方式叫<b>琶音（arpeggio）</b>。</div>
+  <div class="panel">
+    <div class="panel-title">和弦實驗室：選根音＋類型，看組成、聽聲音</div>
+    <div class="controls">
+      <label class="ctl">根音：<select class="sel" id="c-root"></select></label>
+      <div class="seg" id="c-seg"></div>
+    </div>
+    <div id="c-info" class="hint" style="font-size:15px"></div>
+    <div id="c-piano"></div>
+    <div id="c-board" style="margin-top:8px"></div>
+    <div class="controls">
+      <button class="btn" id="c-block">▶ 整個和弦（同時響）</button>
+      <button class="btn" id="c-arp">▶ 琶音（貝斯拆開彈）</button>
+      <button class="btn secondary" id="c-vs">▶ 跟大三和弦比一比</button>
+      <button class="btn secondary" id="c-stop">■ 停止</button>
+    </div>
+    <div class="hint">指板顯示的是這個和弦的<b>和弦音位置</b>（R＝根音）。試著用琶音鍵聽貝斯怎麼「拼」出這個和弦。</div>
+  </div>
+  <h3>和弦公式總表</h3>
+  <table class="tbl">
+    <tr><th>類型</th><th>寫法（以 C 為例）</th><th>公式</th><th>個性</th></tr>
+    <tr><td>大三和弦</td><td class="mono">C</td><td class="mono">1-3-5</td><td>明亮、快樂、穩定</td></tr>
+    <tr><td>小三和弦</td><td class="mono">Cm</td><td class="mono">1-b3-5</td><td>憂鬱、內斂</td></tr>
+    <tr><td>掛二和弦</td><td class="mono">Csus2</td><td class="mono">1-2-5</td><td>開放、懸浮（3 音被 2 取代）</td></tr>
+    <tr><td>掛四和弦</td><td class="mono">Csus4</td><td class="mono">1-4-5</td><td>期待、想解決回大／小和弦</td></tr>
+    <tr><td>增三和弦</td><td class="mono">Caug / C+</td><td class="mono">1-3-#5</td><td>詭異上浮、過渡用</td></tr>
+    <tr><td>減三和弦</td><td class="mono">Cdim / C°</td><td class="mono">1-b3-b5</td><td>緊張、不安</td></tr>
+    <tr><td>強力和弦</td><td class="mono">C5</td><td class="mono">1-5</td><td>沒有 3 音→不大不小，搖滾利器</td></tr>
+    <tr><td>大七和弦</td><td class="mono">Cmaj7</td><td class="mono">1-3-5-7</td><td>溫柔、都會、City-pop</td></tr>
+    <tr><td>小七和弦</td><td class="mono">Cm7</td><td class="mono">1-b3-5-b7</td><td>放鬆、soul／R&amp;B</td></tr>
+    <tr><td>屬七和弦</td><td class="mono">C7</td><td class="mono">1-3-5-b7</td><td>藍調味、強烈想解決</td></tr>
+    <tr><td>半減七和弦</td><td class="mono">Cm7b5</td><td class="mono">1-b3-b5-b7</td><td>爵士的憂鬱轉場</td></tr>
+    <tr><td>減七和弦</td><td class="mono">Cdim7</td><td class="mono">1-b3-b5-bb7</td><td>懸疑片配樂感</td></tr>
+  </table>
+  <div class="note warn"><b>命名地雷：</b><span class="mono">C7</span>、<span class="mono">Cmaj7</span>、<span class="mono">Cm7</span> 是三個完全不同的和弦！沒寫 maj 也沒寫 m 的「7」＝<b>屬七</b>（大三和弦＋小七度）。用上面的實驗室把三個都聽一遍，耳朵就不會忘。</div>
+</section>
+
+<section class="lesson" id="s3">
+  <h2>和弦轉位：換個音當地基</h2>
+  <p>和弦的組成音不一定要照 1-3-5 的順序疊。把不同的音放在<b>最低音</b>，就叫<b>轉位（inversion）</b>：</p>
+  <p><b>原位</b>＝根音在最低（C-E-G）；<b>第一轉位</b>＝3 音在最低（E-G-C），記作 <span class="badge">C/E</span>；<b>第二轉位</b>＝5 音在最低（G-C-E），記作 <span class="badge">C/G</span>。七和弦多一個音，還能有第三轉位（7 音在最低）。</p>
+  <p>斜線記號 <span class="mono">C/E</span> 的讀法：「C 和弦，但貝斯彈 E」——沒錯，<b>斜線後面那個音就是寫給貝斯手的</b>！轉位能讓和弦連接更平滑，也是貝斯線好聽的秘密。</p>
+  <div class="panel">
+    <div class="panel-title">轉位實驗室</div>
+    <div class="controls">
+      <label class="ctl">和弦：<select class="sel" id="v-root"></select></label>
+      <div class="seg" id="v-quality"></div>
+    </div>
+    <div class="controls">
+      <div class="seg" id="v-seg"></div>
+      <button class="btn" id="v-play">▶ 播放</button>
+      <button class="btn secondary" id="v-cycle">▶ 三種轉位連續聽</button>
+    </div>
+    <div id="v-info" class="hint" style="font-size:15px"></div>
+    <div id="v-piano"></div>
+  </div>
+</section>
+
+<section class="lesson" id="s4">
+  <h2>聽力訓練：這是什麼和弦？</h2>
+  <div class="panel">
+    <div class="panel-title">和弦聽力測驗</div>
+    <div class="controls">
+      <button class="btn" id="cq-new">🎲 出題</button>
+      <button class="btn secondary" id="cq-again">↻ 再聽一次</button>
+      <label class="ctl">難度：<select class="sel" id="cq-level">
+        <option value="1">初級（大 / 小）</option>
+        <option value="2">中級（大 / 小 / sus4 / dim）</option>
+        <option value="3">進階（大 / 小 / maj7 / m7 / 屬7）</option>
+      </select></label>
+    </div>
+    <div class="quiz-opts" id="cq-opts"></div>
+    <div class="quiz-fb" id="cq-fb"></div>
+    <div class="score" id="cq-score"></div>
+  </div>
+</section>
+
+<section class="lesson">
+  <h2>本章重點</h2>
+  <table class="tbl">
+    <tr><th>觀念</th><th>一句話記住</th></tr>
+    <tr><td>音程</td><td>兩音的距離（以半音計），每種距離有自己的表情。</td></tr>
+    <tr><td>三和弦</td><td>1-3-5 疊起來；第 3 音決定大（明亮）或小（憂鬱）。</td></tr>
+    <tr><td>七和弦</td><td>三和弦再加 7 音：maj7 溫柔、m7 放鬆、7（屬七）想解決。</td></tr>
+    <tr><td>sus / aug / dim</td><td>sus 用 2 或 4 取代 3 音；aug 升 5 音；dim 降 5 音。</td></tr>
+    <tr><td>轉位</td><td>換不同和弦音當最低音；C/E 的 E 就是貝斯該彈的音。</td></tr>
+    <tr><td>貝斯手心法</td><td>和弦不用壓好壓滿——拆成琶音、勾勒和弦，就是 bassline。</td></tr>
+  </table>
+</section>

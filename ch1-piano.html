@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>鋼琴基礎：12 音的世界｜Bass 樂理互動教室</title>
+<style>
+:root{
+  --bg:#0f1117;
+  --bg2:#161a23;
+  --card:#1c212e;
+  --card2:#232a3a;
+  --line:#2e3648;
+  --text:#e8ecf4;
+  --muted:#9aa3b5;
+  --accent:#f5a623;
+  --accent2:#4fc3f7;
+  --green:#66d9a3;
+  --red:#ef6d6d;
+  --purple:#b78cf7;
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+  line-height:1.75;
+  font-size:16px;
+}
+a{color:var(--accent2);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ===== top nav ===== */
+.topnav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(15,17,23,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:10px;
+  padding:10px 18px;flex-wrap:wrap;
+}
+.topnav .brand{font-weight:700;color:var(--accent);white-space:nowrap;font-size:15px}
+.topnav .links{display:flex;gap:4px;flex-wrap:wrap}
+.topnav a.chip{
+  color:var(--muted);font-size:13px;padding:4px 9px;border-radius:8px;white-space:nowrap;
+}
+.topnav a.chip:hover{background:var(--card);color:var(--text);text-decoration:none}
+.topnav a.chip.active{background:var(--accent);color:#101010;font-weight:700}
+
+/* ===== layout ===== */
+.wrap{max-width:980px;margin:0 auto;padding:28px 20px 90px}
+.hero{
+  padding:34px 0 10px;
+}
+.hero .kicker{color:var(--accent);font-weight:700;letter-spacing:2px;font-size:13px}
+.hero h1{font-size:32px;margin:6px 0 10px;line-height:1.3}
+.hero p.lead{color:var(--muted);max-width:720px}
+.learn-box{
+  margin-top:18px;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius);padding:14px 18px;font-size:14px;color:var(--muted);
+}
+.learn-box b{color:var(--text)}
+
+section.lesson{margin-top:44px}
+section.lesson h2{
+  font-size:23px;border-left:4px solid var(--accent);padding-left:12px;margin-bottom:14px;
+}
+section.lesson h3{font-size:17px;margin:22px 0 8px;color:var(--accent2)}
+section.lesson p{margin:10px 0;color:#cdd4e2}
+section.lesson p b,section.lesson li b{color:var(--text)}
+.note{
+  background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent2);
+  border-radius:10px;padding:12px 16px;margin:14px 0;font-size:14.5px;color:var(--muted);
+}
+.note.warn{border-left-color:var(--accent)}
+.note b{color:var(--text)}
+
+/* ===== interactive panel ===== */
+.panel{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px;margin:18px 0;overflow-x:auto;
+}
+.panel .panel-title{
+  font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px;font-size:15px;
+}
+.panel .panel-title::before{content:"▶";color:var(--accent);font-size:11px}
+.panel .hint{font-size:13px;color:var(--muted);margin-top:8px}
+
+/* controls */
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+button.btn{
+  background:var(--accent);color:#141414;border:none;border-radius:9px;
+  padding:8px 16px;font-size:14px;font-weight:700;cursor:pointer;
+  font-family:inherit;transition:transform .08s, filter .15s;
+}
+button.btn:hover{filter:brightness(1.1)}
+button.btn:active{transform:scale(.96)}
+button.btn.secondary{background:var(--card2);color:var(--text);border:1px solid var(--line)}
+button.btn.small{padding:5px 11px;font-size:13px;font-weight:600}
+button.btn.toggled{background:var(--accent2);color:#08222e}
+select.sel,input.inp{
+  background:var(--card2);color:var(--text);border:1px solid var(--line);
+  border-radius:9px;padding:7px 10px;font-size:14px;font-family:inherit;
+}
+label.ctl{font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
+input[type=range]{accent-color:var(--accent)}
+
+/* seg buttons */
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{
+  background:var(--card2);color:var(--muted);border:1px solid var(--line);
+  border-radius:8px;padding:6px 12px;font-size:13.5px;cursor:pointer;font-family:inherit;
+}
+.seg button:hover{color:var(--text)}
+.seg button.on{background:var(--accent);border-color:var(--accent);color:#141414;font-weight:700}
+
+/* ===== tables ===== */
+table.tbl{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
+table.tbl th{
+  background:var(--card2);color:var(--accent);text-align:left;
+  padding:8px 12px;border:1px solid var(--line);white-space:nowrap;
+}
+table.tbl td{padding:7px 12px;border:1px solid var(--line);color:#cdd4e2}
+table.tbl tr.hl td{background:rgba(245,166,35,.13)}
+table.tbl td .play-ico{cursor:pointer;color:var(--accent);font-weight:700}
+
+/* badge */
+.badge{
+  display:inline-block;background:var(--card2);border:1px solid var(--line);
+  border-radius:6px;padding:1px 8px;font-size:12.5px;color:var(--accent2);margin:0 2px;
+  font-family:ui-monospace,Menlo,Consolas,monospace;
+}
+.formula{
+  font-family:ui-monospace,Menlo,Consolas,monospace;
+  background:var(--bg2);border:1px solid var(--line);border-radius:9px;
+  padding:8px 14px;display:inline-block;margin:6px 0;font-size:15px;color:var(--accent);
+  letter-spacing:1px;
+}
+
+/* ===== quiz ===== */
+.quiz-q{font-weight:700;margin-bottom:10px}
+.quiz-opts{display:flex;gap:8px;flex-wrap:wrap}
+.quiz-opts button{min-width:64px}
+.quiz-fb{margin-top:10px;font-size:14.5px;min-height:22px}
+.quiz-fb.ok{color:var(--green)}
+.quiz-fb.no{color:var(--red)}
+.score{font-size:13px;color:var(--muted);margin-top:6px}
+
+/* footer nav */
+.pagenav{
+  display:flex;justify-content:space-between;gap:12px;margin-top:60px;
+  border-top:1px solid var(--line);padding-top:22px;
+}
+.pagenav a{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:12px 18px;color:var(--text);max-width:46%;
+}
+.pagenav a:hover{border-color:var(--accent);text-decoration:none}
+.pagenav .dir{font-size:12px;color:var(--muted)}
+.pagenav .ttl{font-weight:700;font-size:14.5px}
+
+/* svg instrument shared */
+.instrument{width:100%;overflow-x:auto;padding:4px 0}
+.instrument svg{display:block;margin:0 auto}
+svg text{user-select:none;-webkit-user-select:none}
+.clickable{cursor:pointer}
+
+/* keyboard grid for index page */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:24px}
+.card-link{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px;color:var(--text);display:block;transition:transform .12s,border-color .15s;
+}
+.card-link:hover{transform:translateY(-3px);border-color:var(--accent);text-decoration:none}
+.card-link .num{color:var(--accent);font-weight:800;font-size:13px;letter-spacing:1.5px}
+.card-link h3{margin:6px 0 8px;font-size:18px}
+.card-link p{color:var(--muted);font-size:13.5px;line-height:1.6}
+.card-link .tags{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+.card-link .tags span{font-size:11.5px;background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:2px 7px;color:var(--accent2)}
+
+/* misc */
+.center{text-align:center}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+.acc{color:var(--accent)}
+.acc2{color:var(--accent2)}
+.big-num{font-size:40px;font-weight:800;color:var(--accent);line-height:1.2}
+.flexrow{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.flexrow>div{flex:1;min-width:260px}
+@media (max-width:640px){
+  .hero h1{font-size:25px}
+  body{font-size:15px}
+}
+
+</style>
+</head>
+<body>
+<nav class="topnav"><span class="brand">🎸 Bass 樂理互動教室</span><div class="links"><a class="chip" href="index.html">首頁</a><a class="chip active" href="ch1-piano.html">1 鋼琴</a><a class="chip" href="ch2-bass.html">2 貝斯</a><a class="chip" href="ch3-scales.html">3 音階</a><a class="chip" href="ch4-chords.html">4 和弦</a><a class="chip" href="ch5-progressions.html">5 進行</a><a class="chip" href="ch6-notation.html">6 記譜</a><a class="chip" href="ch7-rhythm.html">7 節奏</a><a class="chip" href="ch8-circle.html">8 五度圈</a></div></nav>
+<div class="wrap">
+<div class="hero"><div class="kicker">第 1 章｜12 音循環・音名・全音與半音</div><h1>鋼琴基礎：12 音的世界</h1></div>
+<p class="lead" style="color:var(--muted)">為什麼學貝斯要先看鋼琴？因為鋼琴的鍵盤把「音樂只有 12 個音」這件事攤開在你眼前——白鍵、黑鍵、規律的圖案，一目了然。先在鋼琴上建立音感與觀念，之後搬到貝斯指板上就會非常順。</p>
+<div class="learn-box"><b>本章你會學到：</b>12 音循環的規律・音名（C D E F G A B 與 #/b）・全音與半音・異名同音</div>
+
+<section class="lesson" id="s1">
+  <h2>音樂只有 12 個音</h2>
+  <p>不管是嘻哈、爵士、流行還是金屬，你聽到的所有音樂，都是由 <b>12 個不同的音</b> 組成的。就像畫家用有限的顏料調出千變萬化的畫，音樂家用這 12 個音寫出所有的歌。</p>
+  <p>在鋼琴上，從任何一個 C 往右數到下一個 C（含黑鍵），正好經過 12 個琴鍵，這就是一組「12 音循環」。整台鋼琴不過是同一組循環不斷重複——越往右音越高、越往左音越低，但音名完全相同。</p>
+  <div class="panel">
+    <div class="panel-title">互動鍵盤：親手彈彈看 12 音循環</div>
+    <div id="p1-piano"></div>
+    <div class="controls">
+      <button class="btn" id="p1-play12">▶ 依序播放 12 個音</button>
+      <button class="btn secondary" id="p1-octave">▶ 聽「同一個音、不同八度」</button>
+      <button class="btn secondary" id="p1-groups">標出黑鍵 2+3 群組</button>
+      <button class="btn secondary" id="p1-clear">清除標示</button>
+    </div>
+    <div class="hint">直接點琴鍵就會發出聲音。注意聽：從 C 彈到下一個 C，音高「回到家」了，只是高了一個八度。</div>
+  </div>
+  <h3>黑鍵是你的路標</h3>
+  <p>黑鍵永遠以「<b>2 個一組、3 個一組</b>」交替出現。找到任何一組 2 個黑鍵，它左邊緊鄰的白鍵一定是 <span class="badge">C</span>——這就是每組 12 音循環的起點。學會認這個圖案，你在任何鍵盤上都不會迷路。</p>
+  <div class="panel">
+    <div class="panel-title">小測驗：找出所有的 C</div>
+    <div class="quiz-q">在下面的鍵盤上，把每一個 C 都點出來（提示：2 個黑鍵左邊的白鍵）</div>
+    <div id="p1-quizpiano"></div>
+    <div class="quiz-fb" id="p1-quizfb"></div>
+    <div class="controls"><button class="btn small secondary" id="p1-quizreset">重新開始</button></div>
+  </div>
+</section>
+
+<section class="lesson" id="s2">
+  <h2>音名：只要 7 個字母</h2>
+  <p>白鍵的名字用英文字母 <span class="badge">A</span><span class="badge">B</span><span class="badge">C</span><span class="badge">D</span><span class="badge">E</span><span class="badge">F</span><span class="badge">G</span> 循環命名，稱為<b>自然音</b>。彈到 G 之後又回到 A，跟著鍵盤圖案一起無限重複。</p>
+  <p>黑鍵則是相鄰白鍵的「變化版」：往<b>右</b>（升高半音）叫做<b>升</b>記號 <span class="badge">#</span>，例如 C 右邊的黑鍵是 C#；往<b>左</b>（降低半音）叫做<b>降</b>記號 <span class="badge">b</span>，例如 D 左邊的黑鍵是 Db。</p>
+  <div class="note"><b>異名同音（Enharmonic）：</b>C# 和 Db 其實是<b>同一個琴鍵、同一個音高</b>，只是寫法不同——就像「7 點 45 分」和「差一刻 8 點」是同一個時間。白鍵也有這種情況：E# 就是 F，Cb 就是 B。</div>
+  <div class="panel">
+    <div class="panel-title">互動：點任何鍵，看看它的名字（含異名同音）</div>
+    <div id="p2-piano"></div>
+    <div class="controls">
+      <label class="ctl">黑鍵顯示：</label>
+      <div class="seg" id="p2-nameseg"></div>
+    </div>
+    <div style="margin-top:10px;font-size:20px" class="center">你點的音：<span id="p2-picked" class="acc mono" style="font-weight:800">—</span></div>
+  </div>
+</section>
+
+<section class="lesson" id="s3">
+  <h2>全音與半音：音樂的最小步伐</h2>
+  <p>在鍵盤（或貝斯指板）上移動時，我們用兩種「步伐」來丈量距離：</p>
+  <p><b>半音（Half step / Semitone）</b>：移動到<b>緊鄰的下一個鍵</b>，不管黑白。這是西方音樂裡最小的距離。在貝斯上就是移動 <b>1 格（fret）</b>。</p>
+  <p><b>全音（Whole step / Tone）</b>：等於<b>兩個半音</b>，也就是跳過一個鍵。在貝斯上是移動 <b>2 格</b>。</p>
+  <div class="note warn"><b>兩個特別的地方：</b>E–F 之間、B–C 之間<b>沒有黑鍵</b>，它們本身就只差半音。其他相鄰白鍵（C–D、D–E、F–G、G–A、A–B）之間都隔著一個黑鍵，相差全音。這個規則之後在貝斯指板上會再出現，非常重要！</div>
+  <div class="panel">
+    <div class="panel-title">互動：聽聽半音 vs 全音的差別</div>
+    <div id="p3-piano"></div>
+    <div class="controls">
+      <label class="ctl">起點音：<select class="sel" id="p3-root"></select></label>
+      <button class="btn" id="p3-half">▶ 往上半音</button>
+      <button class="btn" id="p3-whole">▶ 往上全音</button>
+      <button class="btn secondary" id="p3-halfdown">▶ 往下半音</button>
+      <button class="btn secondary" id="p3-wholedown">▶ 往下全音</button>
+    </div>
+    <div class="hint" id="p3-desc">選一個起點音，聽聽兩種步伐的差別。半音聽起來「擠、緊張」，全音比較「開、自然」。</div>
+  </div>
+  <div class="panel">
+    <div class="panel-title">小測驗：步伐計算</div>
+    <div class="quiz-q" id="p3-qtext">載入中…</div>
+    <div class="quiz-opts" id="p3-qopts"></div>
+    <div class="quiz-fb" id="p3-qfb"></div>
+    <div class="score" id="p3-qscore"></div>
+  </div>
+</section>
+
+<section class="lesson">
+  <h2>本章重點</h2>
+  <table class="tbl">
+    <tr><th>觀念</th><th>一句話記住</th></tr>
+    <tr><td>12 音循環</td><td>所有音樂只用 12 個音，在鍵盤上不斷重複。</td></tr>
+    <tr><td>黑鍵群組</td><td>2+3 交替出現；2 個黑鍵左邊的白鍵是 C。</td></tr>
+    <tr><td>音名</td><td>白鍵 A–G 循環；黑鍵用 #（升）或 b（降）。</td></tr>
+    <tr><td>異名同音</td><td>C# = Db，同一個音、兩種寫法。</td></tr>
+    <tr><td>半音／全音</td><td>半音＝緊鄰的鍵（貝斯 1 格）；全音＝兩個半音（貝斯 2 格）。E–F、B–C 天生只差半音。</td></tr>
+  </table>
+</section>
+
+<div class="pagenav"><a href="index.html"><div class="dir">← 上一章</div><div class="ttl">Bass 樂理互動教室</div></a><a href="ch2-bass.html" style="text-align:right"><div class="dir">下一章 →</div><div class="ttl">第 2 章　貝斯基礎：認識你的指板</div></a></div>
+</div>
+<script>
+/* ================= BassLab 共用引擎 =================
+   音訊合成（貝斯 / 鋼琴音色）、鋼琴鍵盤與貝斯指板元件、播放排程
+====================================================== */
+"use strict";
+
+/* ---------- 音名工具 ---------- */
+const NOTE_NAMES_SHARP = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+const NOTE_NAMES_FLAT  = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"];
+function midiToName(m, flat){ return (flat?NOTE_NAMES_FLAT:NOTE_NAMES_SHARP)[((m%12)+12)%12]; }
+function midiToNameOct(m, flat){ return midiToName(m,flat) + (Math.floor(m/12)-1); }
+function midiToFreq(m){ return 440 * Math.pow(2,(m-69)/12); }
+function nameToPc(name){
+  const base={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
+  let pc = base[name[0]];
+  for(let i=1;i<name.length;i++){ if(name[i]==="#")pc++; if(name[i]==="b")pc--; }
+  return ((pc%12)+12)%12;
+}
+
+/* ---------- 音訊引擎 ---------- */
+const AudioEngine = (() => {
+  let ctx = null, master = null;
+  function ensure(){
+    if(!ctx){
+      ctx = new (window.AudioContext||window.webkitAudioContext)();
+      master = ctx.createGain();
+      master.gain.value = 0.9;
+      const comp = ctx.createDynamicsCompressor();
+      comp.threshold.value = -14; comp.ratio.value = 6;
+      master.connect(comp); comp.connect(ctx.destination);
+    }
+    if(ctx.state==="suspended") ctx.resume();
+    return ctx;
+  }
+  /* 貝斯撥弦音色：saw+sub sine、低通濾波、快速起音長衰減 */
+  function bass(midi, when, dur, vel){
+    const c = ensure();
+    const t = (when===undefined||when===null)? c.currentTime+0.02 : when;
+    dur = dur || 0.9; vel = vel===undefined?1:vel;
+    const f = midiToFreq(midi);
+    const o1 = c.createOscillator(); o1.type="sawtooth"; o1.frequency.value=f;
+    const o2 = c.createOscillator(); o2.type="sine"; o2.frequency.value=f;
+    const o3 = c.createOscillator(); o3.type="square"; o3.frequency.value=f*2; // 泛音一點點
+    const g1=c.createGain(), g2=c.createGain(), g3=c.createGain();
+    g1.gain.value=0.5; g2.gain.value=0.85; g3.gain.value=0.06;
+    const filt=c.createBiquadFilter(); filt.type="lowpass"; filt.Q.value=2;
+    filt.frequency.setValueAtTime(Math.min(f*9,3200), t);
+    filt.frequency.exponentialRampToValueAtTime(Math.max(f*1.6,120), t+Math.min(dur*0.75,0.7));
+    const amp=c.createGain();
+    const peak=0.5*vel;
+    amp.gain.setValueAtTime(0.0001,t);
+    amp.gain.exponentialRampToValueAtTime(peak, t+0.012);
+    amp.gain.exponentialRampToValueAtTime(peak*0.5, t+Math.min(0.25,dur*0.4));
+    amp.gain.exponentialRampToValueAtTime(0.0001, t+dur);
+    o1.connect(g1); o2.connect(g2); o3.connect(g3);
+    g1.connect(filt); g3.connect(filt); filt.connect(amp); g2.connect(amp);
+    amp.connect(master);
+    [o1,o2,o3].forEach(o=>{o.start(t); o.stop(t+dur+0.05);});
+  }
+  /* 鋼琴風音色：多泛音三角波 + 衰減 */
+  function piano(midi, when, dur, vel){
+    const c = ensure();
+    const t = (when===undefined||when===null)? c.currentTime+0.02 : when;
+    dur = dur || 1.1; vel = vel===undefined?1:vel;
+    const f = midiToFreq(midi);
+    const amp=c.createGain();
+    const peak=0.30*vel;
+    amp.gain.setValueAtTime(0.0001,t);
+    amp.gain.exponentialRampToValueAtTime(peak,t+0.008);
+    amp.gain.exponentialRampToValueAtTime(peak*0.35,t+Math.min(0.35,dur*0.5));
+    amp.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    amp.connect(master);
+    const partials=[[1,1],[2,0.4],[3,0.18],[4,0.09],[5,0.05]];
+    partials.forEach(([n,g])=>{
+      if(f*n>9000)return;
+      const o=c.createOscillator();
+      o.type = n===1 ? "triangle" : "sine";
+      o.frequency.value=f*n;
+      const og=c.createGain(); og.gain.value=g;
+      o.connect(og); og.connect(amp);
+      o.start(t); o.stop(t+dur+0.05);
+    });
+  }
+  /* 節拍器 click */
+  function click(when, accent){
+    const c = ensure();
+    const t = (when===undefined||when===null)? c.currentTime+0.02 : when;
+    const o=c.createOscillator(); o.type="square";
+    o.frequency.value = accent? 1550: 990;
+    const g=c.createGain();
+    const pk = accent? 0.4: 0.22;
+    g.gain.setValueAtTime(pk,t);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.07);
+    o.connect(g); g.connect(master);
+    o.start(t); o.stop(t+0.09);
+  }
+  function drum(when, kind){ // kick / snare 簡易
+    const c=ensure();
+    const t=(when===undefined||when===null)?c.currentTime+0.02:when;
+    if(kind==="kick"){
+      const o=c.createOscillator(); o.type="sine";
+      o.frequency.setValueAtTime(140,t);
+      o.frequency.exponentialRampToValueAtTime(45,t+0.12);
+      const g=c.createGain();
+      g.gain.setValueAtTime(0.9,t); g.gain.exponentialRampToValueAtTime(0.0001,t+0.22);
+      o.connect(g); g.connect(master); o.start(t); o.stop(t+0.25);
+    }else{
+      const len=c.sampleRate*0.15;
+      const buf=c.createBuffer(1,len,c.sampleRate);
+      const d=buf.getChannelData(0);
+      for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2);
+      const src=c.createBufferSource(); src.buffer=buf;
+      const bp=c.createBiquadFilter(); bp.type="highpass"; bp.frequency.value=1800;
+      const g=c.createGain(); g.gain.value=0.5;
+      src.connect(bp); bp.connect(g); g.connect(master); src.start(t);
+    }
+  }
+  function now(){ return ensure().currentTime; }
+  return { bass, piano, click, drum, now, ensure };
+})();
+
+/* ---------- 排程器：播放序列並同步視覺 ----------
+   events: [{time(秒,相對), dur, fn(播放函式), hl(視覺callback)}]
+   回傳 stop()                                          */
+const Player = (()=>{
+  let timers=[]; let active=false;
+  function stop(){
+    timers.forEach(id=>clearTimeout(id));
+    timers=[]; active=false;
+    document.querySelectorAll(".is-playing-btn").forEach(b=>b.classList.remove("is-playing-btn"));
+  }
+  function play(events, onDone){
+    stop();
+    active=true;
+    const t0 = AudioEngine.now()+0.08;
+    let end=0;
+    events.forEach(ev=>{
+      if(ev.fn) ev.fn(t0+ev.time);
+      if(ev.hl){
+        timers.push(setTimeout(()=>{ if(active) ev.hl(); }, Math.max(0,(ev.time)*1000+80)));
+      }
+      end=Math.max(end, ev.time+(ev.dur||0.5));
+    });
+    timers.push(setTimeout(()=>{ active=false; if(onDone)onDone(); }, end*1000+300));
+    return stop;
+  }
+  return {play, stop, isActive:()=>active};
+})();
+
+/* ---------- 鋼琴鍵盤元件 ----------
+   makePiano(el, opts)
+   opts: startMidi(白鍵起點,建議C), octaves, onClick(midi), showLabels("none"|"white"|"all"|"letter")
+   回傳 api: highlight(map: midi->{color,label}), clear(), flash(midi), rootStyle
+------------------------------------------------- */
+function makePiano(el, opts){
+  opts=opts||{};
+  const octaves=opts.octaves||2;
+  const startMidi=opts.startMidi||48; // C3
+  const showLabels=opts.showLabels||"white";
+  const keyW=opts.keyW||44, keyH=opts.keyH||150;
+  const nWhite=octaves*7+1;
+  const W=nWhite*keyW+2, H=keyH+34;
+  const svgNS="http://www.w3.org/2000/svg";
+  const svg=document.createElementNS(svgNS,"svg");
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  svg.setAttribute("width",Math.min(W, 900));
+  el.classList.add("instrument");
+  el.appendChild(svg);
+  const whitePcs=[0,2,4,5,7,9,11];
+  const keys=[]; // {midi, rect, label, isBlack, baseFill}
+  // 白鍵
+  let wi=0;
+  const total=octaves*12+1;
+  for(let i=0;i<total;i++){
+    const midi=startMidi+i;
+    if(whitePcs.includes(midi%12)){
+      const x=wi*keyW;
+      const r=document.createElementNS(svgNS,"rect");
+      r.setAttribute("x",x+1);r.setAttribute("y",1);
+      r.setAttribute("width",keyW-2);r.setAttribute("height",keyH);
+      r.setAttribute("rx",4);
+      r.setAttribute("fill","#f2f2f0");r.setAttribute("stroke","#999");
+      r.classList.add("clickable");
+      svg.appendChild(r);
+      const t=document.createElementNS(svgNS,"text");
+      t.setAttribute("x",x+keyW/2);t.setAttribute("y",keyH-10);
+      t.setAttribute("text-anchor","middle");t.setAttribute("font-size","13");
+      t.setAttribute("fill","#555");t.setAttribute("font-weight","600");
+      t.textContent=(showLabels==="white"||showLabels==="all")?midiToName(midi):"";
+      svg.appendChild(t);
+      const sub=document.createElementNS(svgNS,"text");
+      sub.setAttribute("x",x+keyW/2);sub.setAttribute("y",keyH+22);
+      sub.setAttribute("text-anchor","middle");sub.setAttribute("font-size","12");
+      sub.setAttribute("fill","var(--accent)");sub.setAttribute("font-weight","700");
+      svg.appendChild(sub);
+      keys.push({midi,rect:r,label:t,sub,isBlack:false,baseFill:"#f2f2f0"});
+      wi++;
+    }
+  }
+  // 黑鍵
+  wi=0;
+  for(let i=0;i<total;i++){
+    const midi=startMidi+i;
+    if(whitePcs.includes(midi%12)){ wi++; continue; }
+    const x=wi*keyW - keyW*0.32;
+    const r=document.createElementNS(svgNS,"rect");
+    r.setAttribute("x",x);r.setAttribute("y",1);
+    r.setAttribute("width",keyW*0.64);r.setAttribute("height",keyH*0.62);
+    r.setAttribute("rx",3);
+    r.setAttribute("fill","#1c1c22");r.setAttribute("stroke","#000");
+    r.classList.add("clickable");
+    svg.appendChild(r);
+    const t=document.createElementNS(svgNS,"text");
+    t.setAttribute("x",x+keyW*0.32);t.setAttribute("y",keyH*0.62-8);
+    t.setAttribute("text-anchor","middle");t.setAttribute("font-size","10");
+    t.setAttribute("fill","#bbb");
+    t.textContent=(showLabels==="all")?midiToName(midi):"";
+    svg.appendChild(t);
+    const sub=document.createElementNS(svgNS,"text");
+    sub.setAttribute("x",x+keyW*0.32);sub.setAttribute("y",keyH*0.62-22);
+    sub.setAttribute("text-anchor","middle");sub.setAttribute("font-size","11");
+    sub.setAttribute("fill","#ffd479");sub.setAttribute("font-weight","700");
+    svg.appendChild(sub);
+    keys.push({midi,rect:r,label:t,sub,isBlack:true,baseFill:"#1c1c22"});
+  }
+  const byMidi={}; keys.forEach(k=>byMidi[k.midi]=k);
+  function flash(midi,color){
+    const k=byMidi[midi]; if(!k)return;
+    const prev=k.rect.getAttribute("fill");
+    k.rect.setAttribute("fill",color||"#f5a623");
+    setTimeout(()=>{ k.rect.setAttribute("fill", k._hold || k.baseFill); },260);
+  }
+  keys.forEach(k=>{
+    k.rect.addEventListener("pointerdown",()=>{
+      AudioEngine.piano(k.midi);
+      flash(k.midi,"#f5a623");
+      if(opts.onClick)opts.onClick(k.midi);
+    });
+  });
+  function clear(){
+    keys.forEach(k=>{ k._hold=null; k.rect.setAttribute("fill",k.baseFill); k.sub.textContent=""; });
+  }
+  function highlight(map){ // {midi: {color,label}}
+    clear();
+    Object.keys(map).forEach(m=>{
+      const k=byMidi[m]; if(!k)return;
+      const conf=map[m];
+      k._hold=conf.color|| (k.isBlack? "#c07f1a":"#ffd479");
+      k.rect.setAttribute("fill",k._hold);
+      if(conf.label!==undefined) k.sub.textContent=conf.label;
+    });
+  }
+  return {highlight, clear, flash, keys, byMidi, svg};
+}
+
+/* ---------- 貝斯指板元件 ----------
+   makeFretboard(el, opts)
+   opts: frets, onClick(midi,string,fret), showNames("none"|"natural"|"all"), height
+   四弦: 由上而下 G D A E（同 TAB）
+   回傳 api: highlight(list:[{string(0=G..3=E)|midi, fret, color, label}]), byPos, clear, flash
+------------------------------------------------- */
+const OPEN_STRINGS=[31,26,21,16]; // 反過來顯示: G2? -> 實際 bass: E1=28? 標準四弦貝斯 E1(41Hz)=MIDI28, A1=33, D2=38, G2=43
+// 由上而下 G D A E:
+const BASS_OPEN=[43,38,33,28];
+const BASS_STRING_NAMES=["G","D","A","E"];
+function makeFretboard(el, opts){
+  opts=opts||{};
+  const frets=opts.frets||12;
+  const showNames=opts.showNames||"none";
+  const nutW=46, fretW=opts.fretW||62, rowH=40, padT=26, padB=30, padL=8;
+  const W=padL+nutW+frets*fretW+14, H=padT+rowH*3+padB+22;
+  const svgNS="http://www.w3.org/2000/svg";
+  const svg=document.createElementNS(svgNS,"svg");
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  svg.setAttribute("width",Math.min(W,940));
+  el.classList.add("instrument");
+  el.appendChild(svg);
+  // 指板底
+  const board=document.createElementNS(svgNS,"rect");
+  board.setAttribute("x",padL+nutW);board.setAttribute("y",padT-14);
+  board.setAttribute("width",frets*fretW);board.setAttribute("height",rowH*3+28);
+  board.setAttribute("fill","#3a2a1c");board.setAttribute("rx",4);
+  svg.appendChild(board);
+  // 琴枕
+  const nut=document.createElementNS(svgNS,"rect");
+  nut.setAttribute("x",padL+nutW-5);nut.setAttribute("y",padT-14);
+  nut.setAttribute("width",6);nut.setAttribute("height",rowH*3+28);
+  nut.setAttribute("fill","#d8d3c5");
+  svg.appendChild(nut);
+  // 琴格線
+  for(let f=1;f<=frets;f++){
+    const x=padL+nutW+f*fretW;
+    const l=document.createElementNS(svgNS,"line");
+    l.setAttribute("x1",x);l.setAttribute("y1",padT-14);
+    l.setAttribute("x2",x);l.setAttribute("y2",padT+rowH*3+14);
+    l.setAttribute("stroke","#6e5a41");l.setAttribute("stroke-width",2.5);
+    svg.appendChild(l);
+    // 格數字
+    const t=document.createElementNS(svgNS,"text");
+    t.setAttribute("x",x-fretW/2);t.setAttribute("y",H-6);
+    t.setAttribute("text-anchor","middle");t.setAttribute("font-size","12");
+    t.setAttribute("fill","#8a93a5");
+    t.textContent=f;
+    svg.appendChild(t);
+  }
+  // 定位點
+  [3,5,7,9].forEach(f=>{
+    const c=document.createElementNS(svgNS,"circle");
+    c.setAttribute("cx",padL+nutW+(f-0.5)*fretW);
+    c.setAttribute("cy",padT+rowH*1.5);
+    c.setAttribute("r",5.5);c.setAttribute("fill","#8b775e");
+    svg.appendChild(c);
+  });
+  if(frets>=12){
+    [padT+rowH*0.5,padT+rowH*2.5].forEach(cy=>{
+      const c=document.createElementNS(svgNS,"circle");
+      c.setAttribute("cx",padL+nutW+11.5*fretW);
+      c.setAttribute("cy",cy);
+      c.setAttribute("r",5.5);c.setAttribute("fill","#8b775e");
+      svg.appendChild(c);
+    });
+  }
+  // 弦
+  for(let s=0;s<4;s++){
+    const y=padT+s*rowH;
+    const l=document.createElementNS(svgNS,"line");
+    l.setAttribute("x1",padL+nutW-5);l.setAttribute("y1",y);
+    l.setAttribute("x2",padL+nutW+frets*fretW);l.setAttribute("y2",y);
+    l.setAttribute("stroke","#cfc8b8");l.setAttribute("stroke-width",1.4+s*0.9);
+    svg.appendChild(l);
+    // 弦名
+    const t=document.createElementNS(svgNS,"text");
+    t.setAttribute("x",padL+14);t.setAttribute("y",y+5);
+    t.setAttribute("text-anchor","middle");t.setAttribute("font-size","15");
+    t.setAttribute("font-weight","700");
+    t.setAttribute("fill", "#f5a623");
+    t.textContent=BASS_STRING_NAMES[s];
+    svg.appendChild(t);
+  }
+  // 音位（含 open=fret0）
+  const cells={}; // key "s_f" -> {circle,text,midi}
+  for(let s=0;s<4;s++){
+    for(let f=0;f<=frets;f++){
+      const midi=BASS_OPEN[s]+f;
+      const cx = f===0? padL+nutW-16 : padL+nutW+(f-0.5)*fretW;
+      const cy = padT+s*rowH;
+      const g=document.createElementNS(svgNS,"g");
+      g.classList.add("clickable");
+      const c=document.createElementNS(svgNS,"circle");
+      c.setAttribute("cx",cx);c.setAttribute("cy",cy);c.setAttribute("r",13.5);
+      c.setAttribute("fill","transparent");
+      c.setAttribute("stroke","transparent");
+      const t=document.createElementNS(svgNS,"text");
+      t.setAttribute("x",cx);t.setAttribute("y",cy+4);
+      t.setAttribute("text-anchor","middle");t.setAttribute("font-size","11.5");
+      t.setAttribute("font-weight","700");t.setAttribute("fill","transparent");
+      const nm=midiToName(midi);
+      if(showNames==="all" || (showNames==="natural" && nm.length===1)){
+        c.setAttribute("fill","rgba(255,255,255,0.10)");
+        t.setAttribute("fill","#e8ecf4"); t.textContent=nm;
+      }
+      g.appendChild(c);g.appendChild(t);
+      svg.appendChild(g);
+      const cell={circle:c,text:t,midi,s,f,baseShown:(showNames==="all"||(showNames==="natural"&&nm.length===1))};
+      cells[s+"_"+f]=cell;
+      g.addEventListener("pointerdown",()=>{
+        AudioEngine.bass(midi);
+        flashCell(cell);
+        if(opts.onClick)opts.onClick(midi,s,f);
+      });
+    }
+  }
+  function flashCell(cell,color){
+    const pc=cell.circle.getAttribute("fill"), pt=cell.text.getAttribute("fill"), ptxt=cell.text.textContent;
+    cell.circle.setAttribute("fill",color||"#f5a623");
+    cell.text.setAttribute("fill","#141414");
+    cell.text.textContent=midiToName(cell.midi);
+    setTimeout(()=>{
+      if(cell._hold){ applyHold(cell); }
+      else{
+        cell.circle.setAttribute("fill",pc==="#f5a623"?"transparent":pc);
+        cell.text.setAttribute("fill",pt);
+        cell.text.textContent=ptxt;
+      }
+    },280);
+  }
+  function applyHold(cell){
+    cell.circle.setAttribute("fill",cell._hold.color);
+    cell.circle.setAttribute("stroke",cell._hold.stroke||"transparent");
+    cell.circle.setAttribute("stroke-width",2.5);
+    cell.text.setAttribute("fill",cell._hold.tcolor||"#141414");
+    cell.text.textContent=cell._hold.label!==undefined?cell._hold.label:midiToName(cell.midi);
+  }
+  function clear(){
+    Object.values(cells).forEach(cell=>{
+      cell._hold=null;
+      const nm=midiToName(cell.midi);
+      if(cell.baseShown){
+        cell.circle.setAttribute("fill","rgba(255,255,255,0.10)");
+        cell.text.setAttribute("fill","#e8ecf4");cell.text.textContent=nm;
+      }else{
+        cell.circle.setAttribute("fill","transparent");
+        cell.text.setAttribute("fill","transparent");
+      }
+      cell.circle.setAttribute("stroke","transparent");
+    });
+  }
+  function highlight(list){
+    clear();
+    list.forEach(item=>{
+      const cell=cells[item.string+"_"+item.fret];
+      if(!cell)return;
+      cell._hold={color:item.color||"#f5a623",label:item.label,tcolor:item.tcolor,stroke:item.stroke};
+      applyHold(cell);
+    });
+  }
+  function flashPos(s,f,color){ const cell=cells[s+"_"+f]; if(cell)flashCell(cell,color); }
+  return {highlight,clear,flashPos,cells,svg,frets};
+}
+
+/* 在指板上找音（優先低把位）：回傳 {string,fret,midi} */
+function findOnFretboard(midi, maxFret){
+  maxFret=maxFret||12;
+  for(let s=3;s>=0;s--){ // 從 E 弦(最低)找
+    const f=midi-BASS_OPEN[s];
+    if(f>=0&&f<=maxFret) return {string:s,fret:f,midi};
+  }
+  return null;
+}
+/* 音階在指板上的所有位置 */
+function scaleOnFretboard(rootPc, intervals, maxFret){
+  maxFret=maxFret||12;
+  const pcs=intervals.map(iv=>(rootPc+iv)%12);
+  const out=[];
+  for(let s=0;s<4;s++){
+    for(let f=0;f<=maxFret;f++){
+      const midi=BASS_OPEN[s]+f;
+      const pc=midi%12;
+      const idx=pcs.indexOf(pc);
+      if(idx>=0) out.push({string:s,fret:f,midi,degree:idx});
+    }
+  }
+  return out;
+}
+
+/* ---------- 常用資料 ---------- */
+const SCALES={
+  major:      {name:"大調音階", iv:[0,2,4,5,7,9,11], formula:"W–W–H–W–W–W–H", deg:["1","2","3","4","5","6","7"]},
+  minor:      {name:"自然小調", iv:[0,2,3,5,7,8,10], formula:"W–H–W–W–H–W–W", deg:["1","2","b3","4","5","b6","b7"]},
+  majPent:    {name:"大調五聲", iv:[0,2,4,7,9],      formula:"W–W–WH–W–WH",   deg:["1","2","3","5","6"]},
+  minPent:    {name:"小調五聲", iv:[0,3,5,7,10],     formula:"WH–W–W–WH–W",   deg:["1","b3","4","5","b7"]},
+  blues:      {name:"藍調音階", iv:[0,3,5,6,7,10],   formula:"WH–W–H–H–WH–W", deg:["1","b3","4","b5","5","b7"]},
+  harmMinor:  {name:"和聲小調", iv:[0,2,3,5,7,8,11], formula:"W–H–W–W–H–WH–H",deg:["1","2","b3","4","5","b6","7"]},
+  melMinor:   {name:"旋律小調", iv:[0,2,3,5,7,9,11], formula:"W–H–W–W–W–W–H", deg:["1","2","b3","4","5","6","7"]},
+  chromatic:  {name:"半音階",   iv:[0,1,2,3,4,5,6,7,8,9,10,11], formula:"H×12", deg:null}
+};
+const MODES={
+  ionian:    {name:"Ionian（伊奧尼安）",   iv:[0,2,4,5,7,9,11], deg:"1-2-3-4-5-6-7",        desc:"就是大調音階本身，明亮、穩定。"},
+  dorian:    {name:"Dorian（多利安）",     iv:[0,2,3,5,7,9,10], deg:"1-2-b3-4-5-6-b7",      desc:"小調色彩但帶大六度，爵士、放克常用。"},
+  phrygian:  {name:"Phrygian（弗里吉安）", iv:[0,1,3,5,7,8,10], deg:"1-b2-b3-4-5-b6-b7",    desc:"b2 帶來西班牙／異國風味。"},
+  lydian:    {name:"Lydian（利底安）",     iv:[0,2,4,6,7,9,11], deg:"1-2-3-#4-5-6-7",       desc:"#4 帶來夢幻、飄浮感。"},
+  mixolydian:{name:"Mixolydian（混合利底安）",iv:[0,2,4,5,7,9,10],deg:"1-2-3-4-5-6-b7",     desc:"大調但 b7，藍調、搖滾必備。"},
+  aeolian:   {name:"Aeolian（伊奧利安）",  iv:[0,2,3,5,7,8,10], deg:"1-2-b3-4-5-b6-b7",     desc:"就是自然小調，憂鬱、內斂。"},
+  locrian:   {name:"Locrian（洛克里安）",  iv:[0,1,3,5,6,8,10], deg:"1-b2-b3-4-b5-b6-b7",   desc:"含 b5，最不穩定、最黑暗的調式。"}
+};
+const CHORDS={
+  maj:  {name:"大三和弦",  sym:"",     iv:[0,4,7],      f:"1-3-5"},
+  min:  {name:"小三和弦",  sym:"m",    iv:[0,3,7],      f:"1-b3-5"},
+  dim:  {name:"減三和弦",  sym:"dim",  iv:[0,3,6],      f:"1-b3-b5"},
+  aug:  {name:"增三和弦",  sym:"aug",  iv:[0,4,8],      f:"1-3-#5"},
+  sus2: {name:"掛二和弦",  sym:"sus2", iv:[0,2,7],      f:"1-2-5"},
+  sus4: {name:"掛四和弦",  sym:"sus4", iv:[0,5,7],      f:"1-4-5"},
+  p5:   {name:"強力和弦",  sym:"5",    iv:[0,7],        f:"1-5"},
+  maj7: {name:"大七和弦",  sym:"maj7", iv:[0,4,7,11],   f:"1-3-5-7"},
+  m7:   {name:"小七和弦",  sym:"m7",   iv:[0,3,7,10],   f:"1-b3-5-b7"},
+  dom7: {name:"屬七和弦",  sym:"7",    iv:[0,4,7,10],   f:"1-3-5-b7"},
+  m7b5: {name:"半減七和弦",sym:"m7b5", iv:[0,3,6,10],   f:"1-b3-b5-b7"},
+  dim7: {name:"減七和弦",  sym:"dim7", iv:[0,3,6,9],    f:"1-b3-b5-bb7"},
+  maj6: {name:"大六和弦",  sym:"6",    iv:[0,4,7,9],    f:"1-3-5-6"},
+  maj9: {name:"大九和弦",  sym:"maj9", iv:[0,4,7,11,14],f:"1-3-5-7-9"}
+};
+const INTERVALS=[
+  {semi:0, abbr:"P1", name:"完全一度（同度）", en:"Unison",       quality:"開放協和"},
+  {semi:1, abbr:"m2", name:"小二度",   en:"Minor 2nd",   quality:"強烈不協和"},
+  {semi:2, abbr:"M2", name:"大二度",   en:"Major 2nd",   quality:"輕度不協和"},
+  {semi:3, abbr:"m3", name:"小三度",   en:"Minor 3rd",   quality:"柔和協和"},
+  {semi:4, abbr:"M3", name:"大三度",   en:"Major 3rd",   quality:"柔和協和"},
+  {semi:5, abbr:"P4", name:"完全四度", en:"Perfect 4th", quality:"中度協和"},
+  {semi:6, abbr:"TT", name:"三全音",   en:"Tritone",     quality:"曖昧、緊張"},
+  {semi:7, abbr:"P5", name:"完全五度", en:"Perfect 5th", quality:"開放協和"},
+  {semi:8, abbr:"m6", name:"小六度",   en:"Minor 6th",   quality:"柔和協和"},
+  {semi:9, abbr:"M6", name:"大六度",   en:"Major 6th",   quality:"柔和協和"},
+  {semi:10,abbr:"m7", name:"小七度",   en:"Minor 7th",   quality:"輕度不協和"},
+  {semi:11,abbr:"M7", name:"大七度",   en:"Major 7th",   quality:"強烈不協和"},
+  {semi:12,abbr:"P8", name:"完全八度", en:"Octave",      quality:"開放協和"}
+];
+
+/* ---------- 小工具 ---------- */
+function $(sel,root){ return (root||document).querySelector(sel); }
+function $all(sel,root){ return Array.from((root||document).querySelectorAll(sel)); }
+function segButtons(el, items, onPick, initial){
+  // items: [{key,label}]
+  el.classList.add("seg");
+  const btns={};
+  items.forEach(it=>{
+    const b=document.createElement("button");
+    b.textContent=it.label;
+    b.addEventListener("click",()=>{
+      Object.values(btns).forEach(x=>x.classList.remove("on"));
+      b.classList.add("on");
+      onPick(it.key);
+    });
+    el.appendChild(b);
+    btns[it.key]=b;
+  });
+  if(initial!==undefined && btns[initial]){ btns[initial].classList.add("on"); }
+  return btns;
+}
+/* 播放和弦：type="block"|"arp", inst="piano"|"bass" */
+function playChord(midis, mode, inst, bpm){
+  bpm=bpm||100;
+  const beat=60/bpm;
+  const fn = inst==="bass"? AudioEngine.bass : AudioEngine.piano;
+  const evs=[];
+  if(mode==="arp"){
+    midis.forEach((m,i)=>evs.push({time:i*beat*0.5, dur:beat*0.9, fn:(t)=>fn(m,t,beat*0.9)}));
+    evs.push({time:midis.length*beat*0.5+beat*0.2, dur:beat*2,
+      fn:(t)=>midis.forEach(m=>fn(m,t,beat*2,0.8))});
+  }else{
+    evs.push({time:0, dur:beat*2.2, fn:(t)=>midis.forEach(m=>fn(m,t,beat*2.2,0.85))});
+  }
+  Player.play(evs);
+}
+
+</script>
+<script>
+/* ===== 第 1 章：鋼琴基礎 ===== */
+
+/* --- s1: 12 音循環 --- */
+const p1 = makePiano($("#p1-piano"), {octaves:2, startMidi:48, showLabels:"white"});
+$("#p1-play12").addEventListener("click",()=>{
+  const evs=[];
+  for(let i=0;i<=12;i++){
+    const m=48+i;
+    evs.push({time:i*0.38, dur:0.36,
+      fn:(t)=>AudioEngine.piano(m,t,0.5),
+      hl:()=>p1.flash(m,"#f5a623")});
+  }
+  Player.play(evs);
+});
+$("#p1-octave").addEventListener("click",()=>{
+  const evs=[
+    {time:0,   dur:0.8, fn:(t)=>AudioEngine.piano(48,t,0.9), hl:()=>p1.flash(48)},
+    {time:0.9, dur:0.8, fn:(t)=>AudioEngine.piano(60,t,0.9), hl:()=>p1.flash(60)},
+    {time:1.8, dur:0.8, fn:(t)=>AudioEngine.piano(72,t,0.9), hl:()=>p1.flash(72)},
+    {time:2.9, dur:1.4, fn:(t)=>{AudioEngine.piano(48,t,1.5);AudioEngine.piano(60,t,1.5);AudioEngine.piano(72,t,1.5);},
+      hl:()=>{p1.flash(48);p1.flash(60);p1.flash(72);}}
+  ];
+  Player.play(evs);
+});
+$("#p1-groups").addEventListener("click",()=>{
+  const map={};
+  for(let m=48;m<=72;m++){
+    const pc=m%12;
+    if([1,3].includes(pc)) map[m]={color:"#4fc3f7",label:"2"};
+    if([6,8,10].includes(pc)) map[m]={color:"#b78cf7",label:"3"};
+    if(pc===0) map[m]={color:"#f5a623",label:"C"};
+  }
+  p1.highlight(map);
+});
+$("#p1-clear").addEventListener("click",()=>p1.clear());
+
+/* --- s1 quiz: 找出所有 C --- */
+const CQUIZ_TARGETS=[48,60,72];
+let cFound=new Set();
+const pq = makePiano($("#p1-quizpiano"), {octaves:2, startMidi:48, showLabels:"none",
+  onClick:(midi)=>{
+    const fb=$("#p1-quizfb");
+    if(midi%12===0){
+      cFound.add(midi);
+      const map={};
+      cFound.forEach(m=>map[m]={color:"#66d9a3",label:"C"});
+      pq.highlight(map);
+      if(cFound.size>=CQUIZ_TARGETS.length){
+        fb.textContent="🎉 全部找到了！2 個黑鍵左邊的白鍵，永遠是 C。";
+        fb.className="quiz-fb ok";
+      }else{
+        fb.textContent=`答對！已找到 ${cFound.size} / ${CQUIZ_TARGETS.length} 個 C。`;
+        fb.className="quiz-fb ok";
+      }
+    }else{
+      fb.textContent=`這是 ${midiToName(midi)}，不是 C。提示：先找 2 個一組的黑鍵。`;
+      fb.className="quiz-fb no";
+    }
+  }});
+$("#p1-quizreset").addEventListener("click",()=>{
+  cFound=new Set(); pq.clear();
+  $("#p1-quizfb").textContent="";
+});
+
+/* --- s2: 音名與異名同音 --- */
+let p2FlatMode=false;
+const p2 = makePiano($("#p2-piano"), {octaves:2, startMidi:48, showLabels:"white",
+  onClick:(midi)=>{
+    const sharp=midiToName(midi,false), flat=midiToName(midi,true);
+    let txt;
+    if(sharp===flat) txt=sharp;
+    else txt = p2FlatMode? `${flat}（= ${sharp}）` : `${sharp}（= ${flat}）`;
+    $("#p2-picked").textContent=txt;
+  }});
+function p2Labels(){
+  const map={};
+  for(let m=48;m<=72;m++){
+    const pc=m%12;
+    if(![0,2,4,5,7,9,11].includes(pc)){
+      map[m]={color:"#3a3a44", label:midiToName(m,p2FlatMode)};
+    }
+  }
+  p2.highlight(map);
+}
+segButtons($("#p2-nameseg"),[
+  {key:"sharp",label:"升記號 #"},
+  {key:"flat",label:"降記號 b"}
+],(k)=>{ p2FlatMode = (k==="flat"); p2Labels(); },"sharp");
+p2Labels();
+
+/* --- s3: 全音半音 --- */
+const p3 = makePiano($("#p3-piano"), {octaves:2, startMidi:48, showLabels:"all"});
+const rootSel=$("#p3-root");
+for(let m=53;m<=67;m++){
+  const o=document.createElement("option");
+  o.value=m;o.textContent=midiToNameOct(m);
+  if(m===60)o.selected=true;
+  rootSel.appendChild(o);
+}
+function p3Step(delta,label){
+  const root=parseInt(rootSel.value,10);
+  const target=root+delta;
+  p3.highlight({[root]:{color:"#f5a623",label:"起"},[target]:{color:"#4fc3f7",label:"終"}});
+  Player.play([
+    {time:0,dur:0.6,fn:(t)=>AudioEngine.piano(root,t,0.7)},
+    {time:0.65,dur:0.8,fn:(t)=>AudioEngine.piano(target,t,0.9)}
+  ]);
+  $("#p3-desc").innerHTML=`從 <b>${midiToName(root)}</b> ${label} → <b>${midiToName(target)}</b>（${delta>0?"+":""}${delta} 個半音）`;
+}
+$("#p3-half").addEventListener("click",()=>p3Step(1,"往上半音"));
+$("#p3-whole").addEventListener("click",()=>p3Step(2,"往上全音"));
+$("#p3-halfdown").addEventListener("click",()=>p3Step(-1,"往下半音"));
+$("#p3-wholedown").addEventListener("click",()=>p3Step(-2,"往下全音"));
+
+/* --- s3 quiz --- */
+const P3Q=[
+  {q:"從 C 往上一個全音，是哪個音？", opts:["C#","D","E","B"], a:"D"},
+  {q:"從 E 往上一個半音，是哪個音？", opts:["E#？沒有這個音","F","F#","G"], a:"F"},
+  {q:"從 B 往上一個半音，是哪個音？", opts:["B#？沒有這個音","C#","C","A"], a:"C"},
+  {q:"從 G 往上一個全音，是哪個音？", opts:["G#","A","Ab","B"], a:"A"},
+  {q:"哪兩組白鍵之間「天生只差半音」？", opts:["C–D 和 F–G","E–F 和 B–C","D–E 和 A–B","G–A 和 C–D"], a:"E–F 和 B–C"},
+  {q:"C# 的異名同音是？", opts:["Db","D#","Cb","B"], a:"Db"}
+];
+let p3qi=0,p3score=0;
+function p3Render(){
+  const item=P3Q[p3qi%P3Q.length];
+  $("#p3-qtext").textContent=`第 ${p3qi+1} 題：${item.q}`;
+  const box=$("#p3-qopts"); box.innerHTML="";
+  item.opts.forEach(op=>{
+    const b=document.createElement("button");
+    b.className="btn small secondary"; b.textContent=op;
+    b.addEventListener("click",()=>{
+      const fb=$("#p3-qfb");
+      if(op===item.a){
+        p3score++;
+        fb.textContent="✔ 正確！"; fb.className="quiz-fb ok";
+      }else{
+        fb.textContent=`✘ 不對，答案是 ${item.a}。`; fb.className="quiz-fb no";
+      }
+      p3qi++;
+      $("#p3-qscore").textContent=`答對 ${p3score} / ${p3qi} 題`;
+      setTimeout(p3Render,1200);
+    });
+    box.appendChild(b);
+  });
+}
+p3Render();
+
+</script>
+</body>
+</html>

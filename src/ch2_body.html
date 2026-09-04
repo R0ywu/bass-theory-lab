@@ -1,0 +1,88 @@
+<p class="lead" style="color:var(--muted)">上一章的所有觀念——12 音、音名、全音半音——現在原封不動搬到貝斯上。唯一的差別是「排列方式」：鋼琴把 12 個音排成一直線，貝斯把它們疊成四條弦。</p>
+<div class="learn-box"><b>本章你會學到：</b>四條弦的音名・鋼琴 vs 貝斯的對應關係・指板上的全音半音・用半音階記住整個指板</div>
+
+<section class="lesson" id="s1">
+  <h2>四條弦：E、A、D、G</h2>
+  <p>標準調音的四弦貝斯，從最粗（最低音）到最細（最高音）依序是 <span class="badge">E</span><span class="badge">A</span><span class="badge">D</span><span class="badge">G</span>。習慣上最粗的 E 弦叫第 4 弦、最細的 G 弦叫第 1 弦。</p>
+  <p>空弦（不按格）本身就是一個音；每按一格，音就升高一個半音。記憶口訣可以用「<b>E</b>very <b>A</b>mp <b>D</b>oes <b>G</b>rowl（每台音箱都會吼）」，或自己編一個中文的：「<b>餓</b>的<b>阿</b>弟要<b>點</b>心，<b>過</b>來！」。</p>
+  <div class="panel">
+    <div class="panel-title">互動指板：點空弦（最左側圓圈）聽聽四條弦的音高</div>
+    <div id="b1-board"></div>
+    <div class="controls">
+      <button class="btn" id="b1-open">▶ 依序播放四條空弦（低→高）</button>
+      <button class="btn secondary" id="b1-updown">▶ 在 E 弦上爬半音（0→5 格）</button>
+    </div>
+    <div class="hint">注意圖的方向：跟樂譜 TAB 一樣，<b>最上面那條線是最細的 G 弦</b>，最下面是最粗的 E 弦。點任何位置都會發出聲音。</div>
+  </div>
+</section>
+
+<section class="lesson" id="s2">
+  <h2>鋼琴 vs 貝斯：同一套音、兩種地圖</h2>
+  <p>在鋼琴上，一個八度 = 12 個琴鍵（含黑鍵）；在貝斯上，一個八度 = 同一條弦上的 <b>12 格</b>。差別在於：鋼琴用黑白顏色幫你標出了自然音和升降音，貝斯的每一格長得都一樣——等於把黑鍵和白鍵「壓平」排進同一排。</p>
+  <p>所以在貝斯上彈自然音階（A–B–C–D–E–F–G）時，你必須<b>自己跳過那些「隱形黑鍵」</b>：凡是鋼琴上隔著黑鍵的兩個音（相差全音），在貝斯上就要跳 2 格；只有 <b>B–C</b> 和 <b>E–F</b> 相鄰 1 格（因為它們天生只差半音）。</p>
+  <div class="panel">
+    <div class="panel-title">互動：A 弦 = 一台迷你鋼琴。同步看兩種樂器的對應</div>
+    <div id="b2-piano"></div>
+    <div id="b2-board"></div>
+    <div class="controls">
+      <button class="btn" id="b2-chrom">▶ 半音階：一格一格爬（含隱形黑鍵）</button>
+      <button class="btn secondary" id="b2-alpha">▶ 只彈自然音 A–B–C–D–E–F–G–A（跳格）</button>
+    </div>
+    <div class="hint">播放時上下兩個圖會同步亮起：貝斯 A 弦第 n 格 = 鋼琴上從 A 數起的第 n 個鍵。注意自然音階裡哪裡跳 2 格、哪裡只走 1 格。</div>
+  </div>
+</section>
+
+<section class="lesson" id="s3">
+  <h2>指板上的全音與半音</h2>
+  <p>貝斯上的規則其實比鋼琴更簡單粗暴：</p>
+  <table class="tbl">
+    <tr><th>距離</th><th>在貝斯上</th><th>在鋼琴上</th></tr>
+    <tr><td><b>半音</b>（semitone）</td><td>同一條弦移動 <b>1 格</b></td><td>緊鄰的下一個鍵</td></tr>
+    <tr><td><b>全音</b>（whole tone）</td><td>同一條弦移動 <b>2 格</b></td><td>跳過一個鍵</td></tr>
+  </table>
+  <p>另外一個貝斯專屬的好處：相鄰兩條弦相差「5 格」（完全四度）。所以<b>下一條弦的空弦音＝這條弦的第 5 格</b>。例如 E 弦第 5 格 = A = A 弦空弦。這是你之後換把位、找同音異位的基礎。</p>
+  <div class="panel">
+    <div class="panel-title">互動：同一個音的兩種彈法</div>
+    <div id="b3-board"></div>
+    <div class="controls">
+      <button class="btn" id="b3-same1">▶ E 弦 5 格 vs A 弦空弦（同為 A）</button>
+      <button class="btn" id="b3-same2">▶ A 弦 5 格 vs D 弦空弦（同為 D）</button>
+      <button class="btn" id="b3-same3">▶ D 弦 5 格 vs G 弦空弦（同為 G）</button>
+    </div>
+    <div class="hint">兩個位置會先後發聲——音高一模一樣，因為它們是同一個音。</div>
+  </div>
+</section>
+
+<section class="lesson" id="s4">
+  <h2>認識整個指板</h2>
+  <p>記指板最有效的工具是<b>半音階（chromatic scale）</b>——把 12 個音全部依序排出來：<span class="mono acc">C → C#/Db → D → D#/Eb → E → F → F#/Gb → G → G#/Ab → A → A#/Bb → B → C</span>。在貝斯上，半音階就是「一格一格往上爬」。</p>
+  <p>只要知道空弦音名，加上半音階的順序，你就能推算出任何一格是什麼音。例如 A 弦第 5 格：從 A 往上數 5 個半音 → A#、B、C、C#、<b>D</b>。</p>
+  <div class="panel">
+    <div class="panel-title">互動指板地圖：切換顯示模式，把音名記起來</div>
+    <div id="b4-board"></div>
+    <div class="controls">
+      <div class="seg" id="b4-seg"></div>
+    </div>
+    <div class="hint">建議記憶順序：① 空弦 E A D G → ② E 弦和 A 弦上的自然音 → ③ 3、5、7、9、12 格（有定位點的格子）→ ④ 其餘用半音階推算。第 12 格之後音名重新循環。</div>
+  </div>
+  <div class="panel">
+    <div class="panel-title">小測驗：這一格是什麼音？</div>
+    <div class="quiz-q" id="b4-qtext">載入中…</div>
+    <div id="b4-qboard"></div>
+    <div class="quiz-opts" id="b4-qopts"></div>
+    <div class="quiz-fb" id="b4-qfb"></div>
+    <div class="score" id="b4-qscore"></div>
+  </div>
+</section>
+
+<section class="lesson">
+  <h2>本章重點</h2>
+  <table class="tbl">
+    <tr><th>觀念</th><th>一句話記住</th></tr>
+    <tr><td>四條弦</td><td>由低到高 E–A–D–G；最細的 G 弦是第 1 弦。</td></tr>
+    <tr><td>格與半音</td><td>1 格 = 半音、2 格 = 全音；一條弦 12 格 = 一個八度。</td></tr>
+    <tr><td>隱形黑鍵</td><td>貝斯沒有黑鍵，但彈自然音階時要跳過它們；只有 B–C、E–F 相鄰 1 格。</td></tr>
+    <tr><td>弦與弦的關係</td><td>相鄰弦相差完全四度：下一條弦的空弦 = 這條弦第 5 格。</td></tr>
+    <tr><td>半音階</td><td>12 個音依序排列，是記住整個指板的萬用工具。</td></tr>
+  </table>
+</section>

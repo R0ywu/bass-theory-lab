@@ -1,0 +1,109 @@
+<p class="lead" style="color:var(--muted)">單一個和弦是一個「表情」，把和弦排成序列，音樂就開始「說故事」了。這一章教你順階和弦、羅馬數字與級數功能——學會之後，你可以在任何調裡自己蓋出和弦進行，也能一眼看懂譜上的 I–V–vi–IV 在寫什麼。</p>
+<div class="learn-box"><b>本章你會學到：</b>順階和弦・羅馬數字・七個級數的功能・和弦動線・經典進行（含自由拼裝播放器）</div>
+
+<section class="lesson" id="s1">
+  <h2>順階和弦：一個調裡的七個好朋友</h2>
+  <p>在一個調裡，從音階的<b>每一個音</b>出發、隔一個音疊一個音（1-3-5），就得到七個<b>順階和弦（diatonic chords）</b>。它們全部只用調內的音，所以彼此天生合拍。</p>
+  <p>神奇的是，<b>任何大調</b>的七個順階和弦，性質順序永遠一樣：</p>
+  <p><span class="formula">大調：大 – 小 – 小 – 大 – 大 – 小 – 減</span></p>
+  <p>用羅馬數字表示就是 <span class="badge">I</span><span class="badge">ii</span><span class="badge">iii</span><span class="badge">IV</span><span class="badge">V</span><span class="badge">vi</span><span class="badge">vii°</span>——<b>大寫＝大和弦、小寫＝小和弦、°＝減和弦</b>。因為順序固定，只要說「1–4–5」，任何調的樂手都知道要彈什麼，這就是羅馬數字的威力。</p>
+  <p>小調也有自己的固定順序：</p>
+  <p><span class="formula">小調：小 – 減 – 大 – 小 – 小 – 大 – 大　（i – ii° – III – iv – v – VI – VII）</span></p>
+  <div class="panel">
+    <div class="panel-title">順階和弦實驗室：選一個調，點七個和弦聽聽看</div>
+    <div class="controls">
+      <label class="ctl">調：<select class="sel" id="d-key"></select></label>
+      <div class="seg" id="d-mode"></div>
+      <button class="btn secondary" id="d-playall">▶ 七個依序聽一遍</button>
+    </div>
+    <div id="d-chords" style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0"></div>
+    <div id="d-info" class="hint" style="font-size:14.5px">點上面任何一個和弦卡片就會發聲。</div>
+    <div id="d-piano"></div>
+  </div>
+</section>
+
+<section class="lesson" id="s2">
+  <h2>級數的功能：每個和弦的「人設」</h2>
+  <p>七個順階和弦不只是編號，各自有戲份。掌握三大主角就夠用了：</p>
+  <table class="tbl">
+    <tr><th>級數</th><th>名稱</th><th>人設</th></tr>
+    <tr style="background:rgba(102,217,163,.07)"><td class="mono">I</td><td>主和弦（Tonic）</td><td><b>家</b>。最穩定，樂句常從這裡出發、回這裡結束。</td></tr>
+    <tr><td class="mono">ii</td><td>上主和弦</td><td>過場，喜歡走向 V。</td></tr>
+    <tr><td class="mono">iii</td><td>中音和弦</td><td>柔和的配角，常接 vi。</td></tr>
+    <tr style="background:rgba(79,195,247,.07)"><td class="mono">IV</td><td>下屬和弦（Subdominant）</td><td><b>出門</b>。製造「要去哪裡」的期待感，常走向 V。</td></tr>
+    <tr style="background:rgba(239,109,109,.08)"><td class="mono">V</td><td>屬和弦（Dominant）</td><td><b>想回家</b>。張力最強，強烈想解決回 I。</td></tr>
+    <tr><td class="mono">vi</td><td>下中音和弦</td><td>大調裡的憂鬱擔當（關係小調的家）。</td></tr>
+    <tr><td class="mono">vii°</td><td>導和弦</td><td>懸崖邊的緊張感，急著撲向 I。</td></tr>
+  </table>
+  <div class="panel">
+    <div class="panel-title">互動：聽「家 → 出門 → 想回家 → 到家」的引力</div>
+    <div class="controls">
+      <button class="btn" id="f-cadence">▶ I → IV → V → I（最經典的一趟旅程）</button>
+      <button class="btn secondary" id="f-hang">▶ 停在 V 不回家（感受懸念）</button>
+      <button class="btn secondary" id="f-resolve">▶ …然後回家（V → I 解決）</button>
+    </div>
+    <div class="hint">「停在 V」時你會覺得音樂懸在半空中——這種想被解決的引力，就是和弦進行的推進力。</div>
+  </div>
+  <h3>和弦動線建議（大調）</h3>
+  <p>沒有絕對規則（好聽就是對的），但這張表整理了大調中每個和弦「接誰最順」，卡關時拿來參考：</p>
+  <table class="tbl">
+    <tr><th>目前和弦</th><th>接誰最順</th></tr>
+    <tr><td class="mono">I</td><td>任何和弦都行</td></tr>
+    <tr><td class="mono">ii</td><td class="mono">V・vi・IV・vii°</td></tr>
+    <tr><td class="mono">iii</td><td class="mono">vi</td></tr>
+    <tr><td class="mono">IV</td><td class="mono">V・ii・vii°・I</td></tr>
+    <tr><td class="mono">V</td><td class="mono">I・vi（假終止）</td></tr>
+    <tr><td class="mono">vi</td><td class="mono">IV・ii・I</td></tr>
+    <tr><td class="mono">vii°</td><td class="mono">I・V</td></tr>
+  </table>
+</section>
+
+<section class="lesson" id="s3">
+  <h2>經典進行 + 自由拼裝播放器</h2>
+  <p>幾組出現率超高的進行，先聽熟它們的「味道」，再自己拼裝：<b>I–IV–V</b>（藍調搖滾骨架）、<b>I–V–vi–IV</b>（流行歌四大和弦，無數金曲都用它）、<b>vi–IV–I–V</b>（憂鬱版四大和弦）、<b>ii–V–I</b>（爵士的招牌回家路線）。</p>
+  <div class="panel">
+    <div class="panel-title">進行播放器：預設進行 or 自己拼</div>
+    <div class="controls">
+      <label class="ctl">調：<select class="sel" id="pg-key"></select></label>
+      <label class="ctl">速度：<input type="range" id="pg-bpm" min="60" max="140" value="92" style="width:110px"><span id="pg-bpmv" class="mono">92</span> BPM</label>
+      <label class="ctl">貝斯模式：<select class="sel" id="pg-bassmode">
+        <option value="root">只彈根音</option>
+        <option value="r5">根音＋五音</option>
+        <option value="arp">琶音 1-3-5-3</option>
+      </select></label>
+    </div>
+    <div class="controls">
+      <span style="font-size:13.5px;color:var(--muted)">經典進行：</span>
+      <button class="btn small secondary pg-preset" data-p="I,IV,V,I">I–IV–V–I</button>
+      <button class="btn small secondary pg-preset" data-p="I,V,vi,IV">I–V–vi–IV</button>
+      <button class="btn small secondary pg-preset" data-p="vi,IV,I,V">vi–IV–I–V</button>
+      <button class="btn small secondary pg-preset" data-p="IV,I,V,vi">IV–I–V–vi</button>
+      <button class="btn small secondary pg-preset" data-p="ii,V,I,I">ii–V–I</button>
+    </div>
+    <div class="controls">
+      <span style="font-size:13.5px;color:var(--muted)">自己拼（點羅馬數字加入）：</span>
+      <div class="seg" id="pg-add"></div>
+      <button class="btn small secondary" id="pg-back">⌫ 退一格</button>
+      <button class="btn small secondary" id="pg-clearseq">✕ 清空</button>
+    </div>
+    <div id="pg-seq" style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;min-height:52px"></div>
+    <div class="controls">
+      <button class="btn" id="pg-play">▶ 播放</button>
+      <label class="ctl"><input type="checkbox" id="pg-loop" checked> 循環</label>
+      <button class="btn secondary" id="pg-stop">■ 停止</button>
+    </div>
+    <div class="hint">播放時：鋼琴彈和弦、貝斯照你選的模式伴奏、鼓打拍子。試著切換「只彈根音 → 根音＋五音 → 琶音」，感受 bassline 怎麼跟著和弦走——這就是貝斯手每天在做的事。</div>
+  </div>
+</section>
+
+<section class="lesson">
+  <h2>本章重點</h2>
+  <table class="tbl">
+    <tr><th>觀念</th><th>一句話記住</th></tr>
+    <tr><td>順階和弦</td><td>調內七個音各蓋一個 1-3-5；大調永遠是「大小小大大小減」。</td></tr>
+    <tr><td>羅馬數字</td><td>大寫＝大、小寫＝小、°＝減；跨調通用的和弦語言。</td></tr>
+    <tr><td>三大功能</td><td>I 是家、IV 出門、V 想回家；張力與解決推動音樂前進。</td></tr>
+    <tr><td>寫進行的心法</td><td>先定調 → 從順階和弦挑 → 用耳朵驗收 → 再加 sus／七和弦／轉位當調味料。</td></tr>
+    <tr><td>貝斯手的角色</td><td>看到和弦先鎖定根音，再用五音、三音、七音鋪路。</td></tr>
+  </table>
+</section>

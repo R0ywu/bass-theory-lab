@@ -1,0 +1,119 @@
+<p class="lead" style="color:var(--muted)">「這首歌是什麼調（Key）？」是樂手之間最常出現的一句話。這一章帶你搞懂調與音階：它們是整首歌的「音色調色盤」，決定哪些音放在一起會好聽。</p>
+<div class="learn-box"><b>本章你會學到：</b>調的概念・音階公式（W/H）・大調／小調／五聲／藍調音階・可移動的把位模式・關係調・七個調式</div>
+
+<section class="lesson" id="s1">
+  <h2>什麼是「調」（Key）？</h2>
+  <p>一首歌的<b>調</b>，指的是這首歌主要使用的那一組音。這組音通常來自某個<b>音階（scale）</b>：如果一首歌用的音都來自 C 大調音階，我們就說它「在 C 大調」。</p>
+  <p>知道調有什麼用？<b>合奏</b>時大家能立刻知道彈什麼音不會出錯；<b>即興</b>時你知道安全的音在哪裡；<b>移調</b>時能快速把整首歌搬到別的高度配合主唱；<b>編曲混音</b>時能挑出跟原曲相容的素材。</p>
+  <div class="note"><b>怎麼找出一首歌的調？</b>① 用耳朵：找出聽起來最像「回到家」的那個音（主音）；② 看和弦：歌曲開頭或結尾的和弦常常就是主和弦；③ 看譜上的調號；④ 用 key 偵測軟體輔助。</div>
+</section>
+
+<section class="lesson" id="s2">
+  <h2>音階公式：一條公式走遍 12 個調</h2>
+  <p>音階就是把一組音由低到高排好，從主音（root，「家」的音）出發、爬一個八度回到主音。每種音階都有自己的<b>公式</b>——一串全音（W）與半音（H）的組合。例如：</p>
+  <p><span class="formula">大調音階 = W – W – H – W – W – W – H</span></p>
+  <p>公式最強大的地方在於：<b>從任何一個音出發套用同一條公式，就得到那個調的音階</b>。在貝斯上更方便——把整個指型平移，就完成移調了。</p>
+  <div class="panel">
+    <div class="panel-title">音階實驗室：選主音＋音階，看指型、聽聲音</div>
+    <div class="controls">
+      <label class="ctl">主音：<select class="sel" id="s2-root"></select></label>
+      <div class="seg" id="s2-type"></div>
+    </div>
+    <div class="controls">
+      <div class="seg" id="s2-view"></div>
+      <button class="btn" id="s2-play">▶ 播放（上行）</button>
+      <button class="btn secondary" id="s2-playdown">▶ 播放（下行）</button>
+      <button class="btn secondary" id="s2-stop">■ 停止</button>
+    </div>
+    <div id="s2-info" class="hint" style="font-size:14.5px"></div>
+    <div id="s2-board"></div>
+    <div id="s2-piano" style="margin-top:8px"></div>
+    <div class="hint">指板圖例：<span style="color:#f5a623">●</span> 主音（R）、<span style="color:#4fc3f7">●</span> 其他音階音；數字是級數（b3 = 降三音）。「單弦模式」最能看清楚 W／H 公式：跳 2 格＝W、走 1 格＝H。</div>
+  </div>
+  <h3>常用音階小抄</h3>
+  <table class="tbl" id="s2-table">
+    <tr><th>音階</th><th>公式</th><th>級數</th><th>個性</th><th>試聽</th></tr>
+    <tr><td>大調（Major）</td><td class="mono">W-W-H-W-W-W-H</td><td class="mono">1 2 3 4 5 6 7</td><td>明亮、開心</td><td><span class="play-ico" data-scale="major">▶</span></td></tr>
+    <tr><td>自然小調（Natural minor）</td><td class="mono">W-H-W-W-H-W-W</td><td class="mono">1 2 b3 4 5 b6 b7</td><td>憂鬱、內斂</td><td><span class="play-ico" data-scale="minor">▶</span></td></tr>
+    <tr><td>大調五聲（Major pentatonic）</td><td class="mono">W-W-WH-W-WH</td><td class="mono">1 2 3 5 6</td><td>乾淨、怎麼彈都順</td><td><span class="play-ico" data-scale="majPent">▶</span></td></tr>
+    <tr><td>小調五聲（Minor pentatonic）</td><td class="mono">WH-W-W-WH-W</td><td class="mono">1 b3 4 5 b7</td><td>藍調、有靈魂</td><td><span class="play-ico" data-scale="minPent">▶</span></td></tr>
+    <tr><td>藍調（Blues）</td><td class="mono">WH-W-H-H-WH-W</td><td class="mono">1 b3 4 b5 5 b7</td><td>小調五聲＋藍調音（b5）</td><td><span class="play-ico" data-scale="blues">▶</span></td></tr>
+    <tr><td>和聲小調（Harmonic minor）</td><td class="mono">W-H-W-W-H-WH-H</td><td class="mono">1 2 b3 4 5 b6 7</td><td>古典、異國張力</td><td><span class="play-ico" data-scale="harmMinor">▶</span></td></tr>
+    <tr><td>旋律小調（Melodic minor）</td><td class="mono">W-H-W-W-W-W-H</td><td class="mono">1 2 b3 4 5 6 7</td><td>爵士常客</td><td><span class="play-ico" data-scale="melMinor">▶</span></td></tr>
+  </table>
+  <div class="note"><b>為什麼五聲音階好用？</b>大調五聲＝大調音階拿掉第 4、7 音；小調五聲＝自然小調拿掉第 2、6 音。拿掉的正是最容易「打架」的音，剩下的音怎麼彈都不太會錯，所以是即興和寫 bassline 的首選。藍調音階則是在小調五聲中加回一個緊張的 <b>b5</b>（藍調音），增添靈魂味。</div>
+</section>
+
+<section class="lesson" id="s3">
+  <h2>關係調：一組音、兩種心情</h2>
+  <p>每個大調都有一個<b>關係小調</b>——兩者用的<b>音完全相同</b>，只是「家」不一樣。找法有兩種：</p>
+  <p>① 大調音階的<b>第 6 個音</b>就是關係小調的主音；② 從大調主音<b>往下 3 個半音</b>（貝斯上往琴頭方向退 3 格）。例如 C 大調 → A 小調；G 大調 → E 小調。</p>
+  <div class="panel">
+    <div class="panel-title">互動：聽聽同一組音的兩種心情</div>
+    <div class="controls">
+      <label class="ctl">選大調：<select class="sel" id="s3-key"></select></label>
+      <button class="btn" id="s3-major">▶ 播大調（從大調主音出發）</button>
+      <button class="btn secondary" id="s3-minor">▶ 播關係小調（同一組音、從第 6 音出發）</button>
+    </div>
+    <div id="s3-info" class="hint" style="font-size:15px"></div>
+    <div id="s3-piano"></div>
+    <div class="hint">兩次播的是<b>一模一樣的七個音</b>，只是起點不同：從大調主音出發聽起來明亮，從第 6 音出發立刻變憂鬱。這就是「關係調」的魔法。</div>
+  </div>
+</section>
+
+<section class="lesson" id="s4">
+  <h2>調式（Modes）：同一組積木、七種蓋法</h2>
+  <p>把大調音階的起點輪流換到第 2、3、4…個音，就得到七個<b>調式</b>。它們像同一桶積木蓋出的七棟房子，各有獨特的氣氛。不用急著全部精通——先聽出它們的「味道」就夠了。</p>
+  <div class="panel">
+    <div class="panel-title">調式探索器：同一個主音、七種色彩</div>
+    <div class="controls">
+      <label class="ctl">主音：<select class="sel" id="s4-root"></select></label>
+      <div class="seg" id="s4-seg"></div>
+    </div>
+    <div id="s4-desc" class="hint" style="font-size:14.5px"></div>
+    <div id="s4-board"></div>
+    <div class="controls">
+      <button class="btn" id="s4-play">▶ 播放這個調式</button>
+      <button class="btn secondary" id="s4-compare">▶ 跟大調（Ionian）比一比</button>
+    </div>
+    <div class="hint">「跟大調比一比」會先播 Ionian、再播你選的調式——注意聽是哪幾個音變了。</div>
+  </div>
+  <table class="tbl">
+    <tr><th>調式</th><th>級數</th><th>味道</th></tr>
+    <tr><td>Ionian 伊奧尼安</td><td class="mono">1-2-3-4-5-6-7</td><td>= 大調，明亮穩定</td></tr>
+    <tr><td>Dorian 多利安</td><td class="mono">1-2-b3-4-5-6-b7</td><td>小調＋亮色的 6，爵士／放克</td></tr>
+    <tr><td>Phrygian 弗里吉安</td><td class="mono">1-b2-b3-4-5-b6-b7</td><td>b2 帶西班牙／異國風</td></tr>
+    <tr><td>Lydian 利底安</td><td class="mono">1-2-3-#4-5-6-7</td><td>#4 帶夢幻感</td></tr>
+    <tr><td>Mixolydian 混合利底安</td><td class="mono">1-2-3-4-5-6-b7</td><td>大調＋b7，藍調搖滾</td></tr>
+    <tr><td>Aeolian 伊奧利安</td><td class="mono">1-2-b3-4-5-b6-b7</td><td>= 自然小調</td></tr>
+    <tr><td>Locrian 洛克里安</td><td class="mono">1-b2-b3-4-b5-b6-b7</td><td>b5 最不穩定、最黑暗</td></tr>
+  </table>
+</section>
+
+<section class="lesson" id="s5">
+  <h2>耳朵訓練：大調還是小調？</h2>
+  <div class="panel">
+    <div class="panel-title">聽力測驗</div>
+    <p style="font-size:14.5px;color:var(--muted)">按「出題」會隨機播放一段大調或自然小調音階，聽聽看是哪一種。</p>
+    <div class="controls">
+      <button class="btn" id="s5-new">🎲 出題</button>
+      <button class="btn secondary" id="s5-again">↻ 再聽一次</button>
+      <button class="btn small secondary" id="s5-ansmaj">我覺得是：大調 😊</button>
+      <button class="btn small secondary" id="s5-ansmin">我覺得是：小調 😢</button>
+    </div>
+    <div class="quiz-fb" id="s5-fb"></div>
+    <div class="score" id="s5-score"></div>
+  </div>
+</section>
+
+<section class="lesson">
+  <h2>本章重點</h2>
+  <table class="tbl">
+    <tr><th>觀念</th><th>一句話記住</th></tr>
+    <tr><td>調（Key）</td><td>一首歌主要使用的那組音，由主音＋音階決定。</td></tr>
+    <tr><td>音階公式</td><td>W/H 的排列決定音階個性；同一公式可從任何主音出發。</td></tr>
+    <tr><td>可移動指型</td><td>在貝斯上把指型整個平移＝換調，指型不用重學。</td></tr>
+    <tr><td>關係調</td><td>大調第 6 音＝關係小調主音（往下 3 個半音）；兩者共用同一組音。</td></tr>
+    <tr><td>調式</td><td>同一組音換起點＝七種不同氣氛；先會聽，再談用。</td></tr>
+  </table>
+</section>

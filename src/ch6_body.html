@@ -1,0 +1,86 @@
+<p class="lead" style="color:var(--muted)">記譜法是音樂的文字。這一章不求讓你馬上視奏古典譜，而是教會兩件貝斯手最實用的事：看懂 <b>TAB（四線譜）</b>、看懂<b>音符的時值</b>（一個音要彈多長）。搭配聲音播放，時值不再是抽象的分數。</p>
+<div class="learn-box"><b>本章你會學到：</b>常見的記譜方式・貝斯 TAB 完整讀法・譜號・音符時值（全／二分／四分／八分／十六分）・附點與連結線</div>
+
+<section class="lesson" id="s1">
+  <h2>音樂有哪些「寫法」？</h2>
+  <table class="tbl">
+    <tr><th>記譜方式</th><th>長相</th><th>常見場景</th></tr>
+    <tr><td><b>五線譜</b></td><td>五條線＋豆芽菜</td><td>古典、視奏、學院</td></tr>
+    <tr><td><b>TAB（六線／四線譜）</b></td><td>每條線＝一條弦，數字＝第幾格</td><td>吉他、貝斯自學者的最愛</td></tr>
+    <tr><td><b>Lead sheet（簡譜＋和弦）</b></td><td>旋律＋和弦代號（C、Am7…）</td><td>流行、爵士</td></tr>
+    <tr><td><b>MIDI 捲簾</b></td><td>DAW 裡的長條方塊</td><td>編曲、音樂製作</td></tr>
+  </table>
+  <p><b>譜號小知識：</b>五線譜開頭的符號叫譜號。高音譜號（𝄞，G 譜號）記中央 C 以上的音；<b>低音譜號（𝄢，F 譜號）記中央 C 以下的音——貝斯譜用的就是它</b>。低音譜號的兩個點正好夾住 F 音所在的線，這是它的認記法。</p>
+</section>
+
+<section class="lesson" id="s2">
+  <h2>貝斯 TAB：五分鐘學會</h2>
+  <p>TAB 用四條線代表四條弦，<b>由上而下是 G–D–A–E</b>（最上面是最細的弦——跟本站指板圖一樣）。線上的數字＝按第幾格（0＝空弦）。數字由左往右依序彈；疊在同一直行的數字＝同時彈（和弦）。</p>
+  <div class="panel">
+    <div class="panel-title">互動 TAB 播放器：跟著亮起的數字聽</div>
+    <div class="controls">
+      <div class="seg" id="t-seg"></div>
+      <label class="ctl">速度：<input type="range" id="t-bpm" min="50" max="120" value="80" style="width:100px"><span id="t-bpmv" class="mono">80</span> BPM</label>
+      <button class="btn" id="t-play">▶ 播放</button>
+      <button class="btn secondary" id="t-stop">■ 停止</button>
+    </div>
+    <pre id="t-tab" class="mono" style="background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.9;overflow-x:auto"></pre>
+    <div id="t-board"></div>
+    <div class="hint" id="t-desc"></div>
+  </div>
+  <h3>TAB 常見技巧記號</h3>
+  <table class="tbl">
+    <tr><th>記號</th><th>名稱</th><th>做法</th></tr>
+    <tr><td class="mono">5h7</td><td>搥弦（Hammer-on）</td><td>彈第 5 格後，左手指直接搥上第 7 格發聲，不再撥弦。</td></tr>
+    <tr><td class="mono">7p5</td><td>勾弦（Pull-off）</td><td>按住 5、7 兩格，彈後把 7 的手指往下勾離，讓 5 響出來。</td></tr>
+    <tr><td class="mono">5/7、7\5</td><td>滑音（Slide）</td><td>彈第 5 格後手指沿弦滑到第 7 格（\ 是往下滑）。</td></tr>
+    <tr><td class="mono">7b</td><td>推弦（Bend）</td><td>把弦往上推，音高升高（推到隔壁格音高＝半音推弦）。</td></tr>
+    <tr><td class="mono">5~</td><td>顫音（Vibrato）</td><td>按住後快速小幅搖動手指，讓音微微波動。</td></tr>
+  </table>
+</section>
+
+<section class="lesson" id="s3">
+  <h2>音符時值：一個音要彈多長？</h2>
+  <p>在 4/4 拍裡，一小節有 4 拍。各種音符像切蛋糕一樣把小節切成不同大小：</p>
+  <table class="tbl">
+    <tr><th>音符</th><th>名稱</th><th>長度（4/4）</th><th>一小節放幾個</th></tr>
+    <tr><td style="font-size:22px">𝅝</td><td>全音符</td><td>4 拍</td><td>1</td></tr>
+    <tr><td style="font-size:22px">𝅗𝅥</td><td>二分音符</td><td>2 拍</td><td>2</td></tr>
+    <tr><td style="font-size:22px">♩</td><td>四分音符</td><td>1 拍</td><td>4</td></tr>
+    <tr><td style="font-size:22px">♪</td><td>八分音符</td><td>1/2 拍</td><td>8</td></tr>
+    <tr><td style="font-size:22px">𝅘𝅥𝅯</td><td>十六分音符</td><td>1/4 拍</td><td>16</td></tr>
+  </table>
+  <div class="panel">
+    <div class="panel-title">時值播放器：同一小節、不同切法（附節拍器）</div>
+    <div class="controls">
+      <div class="seg" id="n-seg"></div>
+      <label class="ctl">速度：<input type="range" id="n-bpm" min="50" max="120" value="70" style="width:100px"><span id="n-bpmv" class="mono">70</span> BPM</label>
+      <button class="btn" id="n-play">▶ 播放一小節</button>
+      <button class="btn secondary" id="n-all">▶ 五種連續聽</button>
+    </div>
+    <div id="n-viz" style="margin:12px 0"></div>
+    <div class="hint">上排方塊＝音符（寬度＝長度），下方「喀」聲＝節拍器的 4 拍。注意聽：八分音符是每拍 2 個、十六分是每拍 4 個。</div>
+  </div>
+  <h3>附點與連結線</h3>
+  <p><b>附點（dot）</b>：音符右邊加一個小點，長度變成原本的 <b>1.5 倍</b>。附點四分音符 = 1 + 0.5 = 1.5 拍；附點二分音符 = 3 拍。</p>
+  <p><b>連結線（tie）</b>：把兩個相同音高的音符「黏」成一個長音，長度相加。<b>連桁（beam）</b>：八分／十六分音符常把尾巴連成橫桿，方便閱讀（一條桿＝八分、兩條＝十六分）。</p>
+  <div class="panel">
+    <div class="panel-title">互動：附點的感覺</div>
+    <div class="controls">
+      <button class="btn" id="dot-straight">▶ 平的：♩ ♩ ♩ ♩</button>
+      <button class="btn" id="dot-dotted">▶ 附點：♩. ♪ ♩. ♪（跳跳的）</button>
+    </div>
+    <div class="hint">附點節奏會產生「長—短、長—短」的搖擺感，是無數 groove 的基礎。</div>
+  </div>
+</section>
+
+<section class="lesson">
+  <h2>本章重點</h2>
+  <table class="tbl">
+    <tr><th>觀念</th><th>一句話記住</th></tr>
+    <tr><td>TAB</td><td>四條線＝四條弦（上細下粗），數字＝第幾格，直行對齊＝同時彈。</td></tr>
+    <tr><td>低音譜號</td><td>𝄢 = F 譜號，貝斯譜的家；兩點夾住的線就是 F。</td></tr>
+    <tr><td>時值</td><td>全→二分→四分→八分→十六分，每次對半切。</td></tr>
+    <tr><td>附點</td><td>加一點＝變 1.5 倍長；帶來「長短長短」的律動。</td></tr>
+  </table>
+</section>
