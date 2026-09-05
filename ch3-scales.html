@@ -25,26 +25,30 @@
 :root{
   --bg:#0f1117;
   --bg2:#161a23;
+  --nav:#12151d;
   --card:#1c212e;
   --card2:#232a3a;
   --line:#2e3648;
+  --line2:#3a4358;
   --text:#e8ecf4;
+  --body:#cdd4e2;
   --muted:#9aa3b5;
   --accent:#f5a623;
   --accent2:#4fc3f7;
   --green:#66d9a3;
   --red:#ef6d6d;
   --purple:#b78cf7;
-  --radius:14px;
+  --radius:16px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
   background:var(--bg);
   color:var(--text);
-  font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
   line-height:1.75;
   font-size:16px;
+  counter-reset:sec;
 }
 a{color:var(--accent2);text-decoration:none}
 a:hover{text-decoration:underline}
@@ -52,39 +56,68 @@ a:hover{text-decoration:underline}
 /* ===== top nav ===== */
 .topnav{
   position:sticky;top:0;z-index:50;
-  background:rgba(15,17,23,.92);backdrop-filter:blur(8px);
+  background:rgba(18,21,29,.94);backdrop-filter:blur(8px);
   border-bottom:1px solid var(--line);
   display:flex;align-items:center;gap:10px;
-  padding:10px 18px;flex-wrap:wrap;
+  padding:12px 18px;flex-wrap:wrap;
 }
-.topnav .brand{font-weight:700;color:var(--accent);white-space:nowrap;font-size:15px}
-.topnav .links{display:flex;gap:4px;flex-wrap:wrap}
+.topnav .brand{font-weight:900;color:var(--accent);white-space:nowrap;font-size:15px;display:flex;align-items:center;gap:8px}
+.topnav .links{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
 .topnav a.chip{
-  color:var(--muted);font-size:13px;padding:4px 9px;border-radius:8px;white-space:nowrap;
+  color:var(--muted);font-size:13px;padding:5px 10px;border-radius:8px;white-space:nowrap;
 }
 .topnav a.chip:hover{background:var(--card);color:var(--text);text-decoration:none}
-.topnav a.chip.active{background:var(--accent);color:#101010;font-weight:700}
+.topnav a.chip.active{background:var(--accent);color:#141414;font-weight:700}
+/* 章節進度細條 */
+.chprogress{position:sticky;top:0;height:3px;background:var(--card2);z-index:51}
+.chprogress>div{height:3px;background:linear-gradient(90deg,var(--accent),#ffc75e)}
 
 /* ===== layout ===== */
-.wrap{max-width:980px;margin:0 auto;padding:28px 20px 90px}
-.hero{
-  padding:34px 0 10px;
-}
-.hero .kicker{color:var(--accent);font-weight:700;letter-spacing:2px;font-size:13px}
-.hero h1{font-size:32px;margin:6px 0 10px;line-height:1.3}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 20px 90px}
+.wrap.with-rail{max-width:1280px;display:flex;gap:32px;align-items:flex-start}
+.wrap.with-rail>.main{flex:1;min-width:0}
+
+/* 右側目錄欄 */
+.toc-rail{width:250px;flex-shrink:0;position:sticky;top:76px}
+.toc-box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 10px 16px 16px}
+.toc-box .toc-head{font-size:12px;letter-spacing:2px;color:var(--muted);font-weight:700;margin-bottom:10px}
+.toc-box a{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;font-size:13.5px;color:var(--muted)}
+.toc-box a:hover{color:var(--text);text-decoration:none;background:var(--card2)}
+.toc-box a .dot{width:13px;height:13px;border-radius:50%;border:2px solid var(--line2);flex-shrink:0}
+.toc-box a.done{color:var(--green)}
+.toc-box a.done .dot{border-color:var(--green);background:radial-gradient(circle,var(--green) 40%,transparent 45%)}
+.toc-box a.now{background:rgba(245,166,35,.13);color:var(--accent);font-weight:900}
+.toc-box a.now .dot{border-color:var(--accent);background:radial-gradient(circle,var(--accent) 40%,transparent 45%)}
+@media (max-width:1080px){.toc-rail{display:none}.wrap.with-rail{max-width:1000px}}
+
+/* ===== hero ===== */
+.hero{padding:30px 0 6px}
+.hero .kicker-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.hero .chbadge{font-size:13px;letter-spacing:3px;color:var(--accent);font-weight:900}
+.hero .kicker{color:var(--muted);font-size:12.5px;border:1px solid var(--line);border-radius:6px;padding:2px 10px}
+.hero h1{font-size:36px;margin:10px 0 10px;line-height:1.3;font-weight:900}
 .hero p.lead{color:var(--muted);max-width:720px}
 .learn-box{
-  margin-top:18px;background:var(--card);border:1px solid var(--line);
-  border-radius:var(--radius);padding:14px 18px;font-size:14px;color:var(--muted);
+  margin-top:16px;background:var(--card);border:1px solid var(--line);
+  border-radius:12px;padding:13px 18px;font-size:14px;color:var(--muted);
+  border-left:4px solid var(--green);
 }
 .learn-box b{color:var(--text)}
 
-section.lesson{margin-top:44px}
+/* ===== sections ===== */
+section.lesson{margin-top:48px}
 section.lesson h2{
-  font-size:23px;border-left:4px solid var(--accent);padding-left:12px;margin-bottom:14px;
+  font-size:23px;border-left:4px solid var(--accent);padding-left:14px;margin-bottom:14px;
+  display:flex;align-items:baseline;gap:12px;font-weight:900;
 }
-section.lesson h3{font-size:17px;margin:22px 0 8px;color:var(--accent2)}
-section.lesson p{margin:10px 0;color:#cdd4e2}
+section.lesson h2::before{
+  counter-increment:sec;
+  content:counter(sec,decimal-leading-zero);
+  font-size:13px;color:var(--accent);font-weight:900;letter-spacing:1px;
+  font-family:ui-monospace,Menlo,Consolas,monospace;
+}
+section.lesson h3{font-size:17px;margin:24px 0 8px;color:var(--accent2)}
+section.lesson p{margin:10px 0;color:var(--body)}
 section.lesson p b,section.lesson li b{color:var(--text)}
 .note{
   background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent2);
@@ -95,30 +128,49 @@ section.lesson p b,section.lesson li b{color:var(--text)}
 
 /* ===== interactive panel ===== */
 .panel{
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:18px;margin:18px 0;overflow-x:auto;
+  background:linear-gradient(180deg,#1e2432,#1a1f2b);
+  border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px;margin:20px 0;overflow-x:auto;
 }
 .panel .panel-title{
-  font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px;font-size:15px;
+  font-weight:900;display:flex;align-items:center;gap:11px;font-size:15.5px;
+  margin:-18px -18px 16px;padding:12px 18px;
+  border-bottom:1px solid var(--line);
+  background:rgba(245,166,35,.05);
+  border-radius:var(--radius) var(--radius) 0 0;
 }
-.panel .panel-title::before{content:"▶";color:var(--accent);font-size:11px}
-.panel .hint{font-size:13px;color:var(--muted);margin-top:8px}
+.panel .panel-title::before{
+  content:"▶";color:#141414;font-size:11px;
+  background:var(--accent);width:30px;height:30px;border-radius:9px;
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.panel .panel-title::after{
+  content:"互動・有聲";
+  font-size:11px;font-weight:700;color:var(--accent2);
+  border:1px solid rgba(79,195,247,.4);border-radius:6px;
+  padding:1px 9px;letter-spacing:1px;white-space:nowrap;
+}
+.panel .hint{
+  font-size:13px;color:var(--muted);margin-top:12px;
+  background:rgba(79,195,247,.06);border:1px solid rgba(79,195,247,.18);
+  border-radius:9px;padding:9px 14px;line-height:1.7;
+}
 
 /* controls */
-.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}
 button.btn{
-  background:var(--accent);color:#141414;border:none;border-radius:9px;
-  padding:8px 16px;font-size:14px;font-weight:700;cursor:pointer;
+  background:var(--accent);color:#141414;border:none;border-radius:11px;
+  padding:10px 20px;font-size:14.5px;font-weight:900;cursor:pointer;
   font-family:inherit;transition:transform .08s, filter .15s;
 }
 button.btn:hover{filter:brightness(1.1)}
 button.btn:active{transform:scale(.96)}
-button.btn.secondary{background:var(--card2);color:var(--text);border:1px solid var(--line)}
-button.btn.small{padding:5px 11px;font-size:13px;font-weight:600}
+button.btn.secondary{background:var(--card2);color:var(--text);border:1px solid var(--line);font-weight:700}
+button.btn.small{padding:6px 13px;font-size:13px;font-weight:700}
 button.btn.toggled{background:var(--accent2);color:#08222e}
 select.sel,input.inp{
-  background:var(--card2);color:var(--text);border:1px solid var(--line);
-  border-radius:9px;padding:7px 10px;font-size:14px;font-family:inherit;
+  background:var(--card2);color:var(--text);border:1px solid var(--line2);
+  border-radius:9px;padding:8px 12px;font-size:14px;font-family:inherit;font-weight:700;
 }
 label.ctl{font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
 input[type=range]{accent-color:var(--accent)}
@@ -127,18 +179,19 @@ input[type=range]{accent-color:var(--accent)}
 .seg{display:flex;flex-wrap:wrap;gap:6px}
 .seg button{
   background:var(--card2);color:var(--muted);border:1px solid var(--line);
-  border-radius:8px;padding:6px 12px;font-size:13.5px;cursor:pointer;font-family:inherit;
+  border-radius:9px;padding:8px 15px;font-size:13.5px;cursor:pointer;font-family:inherit;
+  min-height:36px;
 }
 .seg button:hover{color:var(--text)}
-.seg button.on{background:var(--accent);border-color:var(--accent);color:#141414;font-weight:700}
+.seg button.on{background:var(--accent);border-color:var(--accent);color:#141414;font-weight:900}
 
 /* ===== tables ===== */
 table.tbl{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
 table.tbl th{
   background:var(--card2);color:var(--accent);text-align:left;
-  padding:8px 12px;border:1px solid var(--line);white-space:nowrap;
+  padding:9px 12px;border:1px solid var(--line);white-space:nowrap;
 }
-table.tbl td{padding:7px 12px;border:1px solid var(--line);color:#cdd4e2}
+table.tbl td{padding:8px 12px;border:1px solid var(--line);color:var(--body)}
 table.tbl tr.hl td{background:rgba(245,166,35,.13)}
 table.tbl td .play-ico{cursor:pointer;color:var(--accent);font-weight:700}
 
@@ -150,9 +203,9 @@ table.tbl td .play-ico{cursor:pointer;color:var(--accent);font-weight:700}
 }
 .formula{
   font-family:ui-monospace,Menlo,Consolas,monospace;
-  background:var(--bg2);border:1px solid var(--line);border-radius:9px;
-  padding:8px 14px;display:inline-block;margin:6px 0;font-size:15px;color:var(--accent);
-  letter-spacing:1px;
+  background:var(--bg2);border:1px solid var(--line);border-radius:10px;
+  padding:9px 16px;display:inline-block;margin:6px 0;font-size:15px;color:var(--accent);
+  letter-spacing:1.5px;
 }
 
 /* ===== quiz ===== */
@@ -173,7 +226,7 @@ table.tbl td .play-ico{cursor:pointer;color:var(--accent);font-weight:700}
   background:var(--card);border:1px solid var(--line);border-radius:12px;
   padding:12px 18px;color:var(--text);max-width:46%;
 }
-.pagenav a:hover{border-color:var(--accent);text-decoration:none}
+.pagenav a:hover{border-color:var(--accent);text-decoration:none;transform:translateY(-2px);transition:all .12s}
 .pagenav .dir{font-size:12px;color:var(--muted)}
 .pagenav .ttl{font-weight:700;font-size:14.5px}
 
@@ -183,18 +236,53 @@ table.tbl td .play-ico{cursor:pointer;color:var(--accent);font-weight:700}
 svg text{user-select:none;-webkit-user-select:none}
 .clickable{cursor:pointer}
 
-/* keyboard grid for index page */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:24px}
+/* ===== index 首頁 ===== */
+.home-hero{padding:52px 0 30px;position:relative}
+.home-hero .kicker{color:var(--accent);font-weight:700;letter-spacing:4px;font-size:13px}
+.home-hero h1{font-size:44px;margin:12px 0 14px;line-height:1.3;font-weight:900}
+.home-hero p.lead{color:var(--muted);max-width:640px;font-size:16.5px}
+.home-cta{display:flex;gap:14px;align-items:center;margin-top:28px;flex-wrap:wrap}
+.home-cta .cta{
+  background:var(--accent);color:#141414;font-weight:900;font-size:15.5px;
+  padding:13px 26px;border-radius:12px;display:inline-flex;align-items:center;gap:9px;
+}
+.home-cta .cta:hover{text-decoration:none;filter:brightness(1.08)}
+.home-cta .cta.ghost{background:var(--card);color:var(--text);border:1px solid var(--line);font-weight:700}
+.home-stats{display:flex;gap:26px;margin-left:auto}
+.home-stats .st{text-align:center}
+.home-stats .st .n{font-size:26px;font-weight:900;line-height:1.3}
+.home-stats .st .l{font-size:12px;color:var(--muted)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:16px;margin-top:20px}
 .card-link{
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:20px;color:var(--text);display:block;transition:transform .12s,border-color .15s;
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:18px;color:var(--text);display:flex;flex-direction:column;gap:8px;
+  transition:transform .12s,border-color .15s;
 }
 .card-link:hover{transform:translateY(-3px);border-color:var(--accent);text-decoration:none}
-.card-link .num{color:var(--accent);font-weight:800;font-size:13px;letter-spacing:1.5px}
-.card-link h3{margin:6px 0 8px;font-size:18px}
-.card-link p{color:var(--muted);font-size:13.5px;line-height:1.6}
-.card-link .tags{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
-.card-link .tags span{font-size:11.5px;background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:2px 7px;color:var(--accent2)}
+.card-link .toprow{display:flex;justify-content:space-between;align-items:center}
+.card-link .num{color:var(--accent);font-weight:900;font-size:12px;letter-spacing:2px}
+.card-link .lv{font-size:11px;border-radius:6px;padding:2px 8px}
+.card-link .lv.a{color:var(--green);background:rgba(102,217,163,.12)}
+.card-link .lv.b{color:var(--accent2);background:rgba(79,195,247,.12)}
+.card-link .lv.c{color:var(--muted);background:var(--card2)}
+.card-link .lv.d{color:var(--purple);background:rgba(183,140,247,.12)}
+.card-link h3{margin:0;font-size:16.5px}
+.card-link p{color:var(--muted);font-size:13px;line-height:1.6;flex:1}
+.card-link .prog{height:4px;border-radius:2px;background:var(--card2);margin-top:4px}
+.card-link .prog>div{height:4px;border-radius:2px;background:var(--accent);width:0}
+
+.path-box{margin-top:36px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 30px}
+.path-box h2{font-size:18px;font-weight:900;margin-bottom:18px}
+.path-row{display:flex;flex-wrap:wrap;gap:16px 0}
+.path-row .step{flex:1;min-width:200px;border-left:3px solid var(--accent);padding:2px 18px 2px 14px}
+.path-row .step .wk{font-size:12px;color:var(--accent);font-weight:700}
+.path-row .step .t{font-size:14px;font-weight:700;margin-top:2px}
+.path-row .step .d{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.6}
+.path-row .step.blue{border-left-color:var(--accent2)}
+.path-row .step.blue .wk{color:var(--accent2)}
+.path-row .step.green{border-left-color:var(--green)}
+.path-row .step.green .wk{color:var(--green)}
 
 /* misc */
 .center{text-align:center}
@@ -205,16 +293,19 @@ svg text{user-select:none;-webkit-user-select:none}
 .flexrow{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
 .flexrow>div{flex:1;min-width:260px}
 @media (max-width:640px){
-  .hero h1{font-size:25px}
+  .hero h1{font-size:26px}
+  .home-hero h1{font-size:30px}
   body{font-size:15px}
+  .home-stats{margin-left:0}
 }
 
 </style>
 </head>
-<body>
+<body data-page="ch3-scales">
 <nav class="topnav"><span class="brand">🎸 Bass 樂理互動教室</span><div class="links"><a class="chip" href="index.html">首頁</a><a class="chip" href="ch1-piano.html">1 鋼琴</a><a class="chip" href="ch2-bass.html">2 貝斯</a><a class="chip active" href="ch3-scales.html">3 音階</a><a class="chip" href="ch4-chords.html">4 和弦</a><a class="chip" href="ch5-progressions.html">5 進行</a><a class="chip" href="ch6-notation.html">6 記譜</a><a class="chip" href="ch7-rhythm.html">7 節奏</a><a class="chip" href="ch8-circle.html">8 五度圈</a></div></nav>
-<div class="wrap">
-<div class="hero"><div class="kicker">第 3 章｜調・音階公式・五聲音階・關係調・調式</div><h1>調與音階</h1></div>
+<div class="chprogress"><div style="width:38%"></div></div>
+<div class="wrap with-rail"><div class="main">
+<div class="hero"><div class="kicker-row"><span class="chbadge">CH 03</span><span class="kicker">調・音階公式・五聲音階・關係調・調式</span></div><h1>調與音階</h1></div>
 <p class="lead" style="color:var(--muted)">「這首歌是什麼調（Key）？」是樂手之間最常出現的一句話。這一章帶你搞懂調與音階：它們是整首歌的「音色調色盤」，決定哪些音放在一起會好聽。</p>
 <div class="learn-box"><b>本章你會學到：</b>調的概念・音階公式（W/H）・大調／小調／五聲／藍調音階・可移動的把位模式・關係調・七個調式</div>
 
@@ -336,6 +427,8 @@ svg text{user-select:none;-webkit-user-select:none}
 </section>
 
 <div class="pagenav"><a href="ch2-bass.html"><div class="dir">← 上一章</div><div class="ttl">第 2 章　貝斯基礎：認識你的指板</div></a><a href="ch4-chords.html" style="text-align:right"><div class="dir">下一章 →</div><div class="ttl">第 4 章　和聲：音程與和弦</div></a></div>
+</div>
+<aside class="toc-rail"><div class="toc-box"><div class="toc-head">本章目錄</div><nav id="toc"></nav></div></aside>
 </div>
 <script>
 /* ================= BassLab 共用引擎 =================
@@ -870,6 +963,51 @@ function playChord(midis, mode, inst, bpm){
   }
   Player.play(evs);
 }
+
+/* ---------- 目錄欄（捲動高亮）與已讀記錄 ---------- */
+(function(){
+  const slug=document.body.dataset.page;
+  if(slug && slug!=="index"){
+    try{ localStorage.setItem("bl-visit-"+slug, "1"); }catch(e){}
+  }
+  const toc=document.getElementById("toc");
+  if(toc){
+    const secs=$all("section.lesson");
+    const links=[];
+    secs.forEach((sec,i)=>{
+      if(!sec.id) sec.id="sec-"+(i+1);
+      const h2=sec.querySelector("h2");
+      if(!h2) return;
+      const a=document.createElement("a");
+      a.href="#"+sec.id;
+      a.innerHTML=`<span class="dot"></span><span>${h2.textContent}</span>`;
+      toc.appendChild(a);
+      links.push({a,sec});
+    });
+    function update(){
+      const mid=window.scrollY+window.innerHeight*0.35;
+      let current=0;
+      links.forEach((l,i)=>{ if(l.sec.offsetTop<=mid) current=i; });
+      links.forEach((l,i)=>{
+        l.a.classList.toggle("now",i===current);
+        l.a.classList.toggle("done",i<current);
+      });
+    }
+    window.addEventListener("scroll",update,{passive:true});
+    update();
+  }
+  /* 首頁章節卡進度 */
+  $all("[data-chprog]").forEach(el=>{
+    try{
+      if(localStorage.getItem("bl-visit-"+el.dataset.chprog)==="1"){
+        const bar=el.querySelector(".prog>div");
+        if(bar)bar.style.width="100%";
+        const lv=el.querySelector(".lv");
+        if(lv){lv.textContent="✓ 已讀";lv.className="lv a";}
+      }
+    }catch(e){}
+  });
+})();
 
 </script>
 <script>

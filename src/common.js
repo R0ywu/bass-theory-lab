@@ -530,3 +530,48 @@ function playChord(midis, mode, inst, bpm){
   }
   Player.play(evs);
 }
+
+/* ---------- 目錄欄（捲動高亮）與已讀記錄 ---------- */
+(function(){
+  const slug=document.body.dataset.page;
+  if(slug && slug!=="index"){
+    try{ localStorage.setItem("bl-visit-"+slug, "1"); }catch(e){}
+  }
+  const toc=document.getElementById("toc");
+  if(toc){
+    const secs=$all("section.lesson");
+    const links=[];
+    secs.forEach((sec,i)=>{
+      if(!sec.id) sec.id="sec-"+(i+1);
+      const h2=sec.querySelector("h2");
+      if(!h2) return;
+      const a=document.createElement("a");
+      a.href="#"+sec.id;
+      a.innerHTML=`<span class="dot"></span><span>${h2.textContent}</span>`;
+      toc.appendChild(a);
+      links.push({a,sec});
+    });
+    function update(){
+      const mid=window.scrollY+window.innerHeight*0.35;
+      let current=0;
+      links.forEach((l,i)=>{ if(l.sec.offsetTop<=mid) current=i; });
+      links.forEach((l,i)=>{
+        l.a.classList.toggle("now",i===current);
+        l.a.classList.toggle("done",i<current);
+      });
+    }
+    window.addEventListener("scroll",update,{passive:true});
+    update();
+  }
+  /* 首頁章節卡進度 */
+  $all("[data-chprog]").forEach(el=>{
+    try{
+      if(localStorage.getItem("bl-visit-"+el.dataset.chprog)==="1"){
+        const bar=el.querySelector(".prog>div");
+        if(bar)bar.style.width="100%";
+        const lv=el.querySelector(".lv");
+        if(lv){lv.textContent="✓ 已讀";lv.className="lv a";}
+      }
+    }catch(e){}
+  });
+})();

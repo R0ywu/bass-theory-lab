@@ -6,17 +6,29 @@ SRC = os.path.join(os.path.dirname(__file__), "src")
 OUT = os.path.join(os.path.dirname(__file__), "out")
 os.makedirs(OUT, exist_ok=True)
 
+SITE_BASE = "https://r0ywu.github.io/bass-theory-lab/"
+SITE_NAME = "Bass 樂理互動教室"
+
 CHAPTERS = [
-    # (檔名, 編號顯示, 標題, 副標)
-    ("index.html",  "",   "Bass 樂理互動教室", ""),
-    ("ch1-piano.html",    "第 1 章", "鋼琴基礎：12 音的世界", "12 音循環・音名・全音與半音"),
-    ("ch2-bass.html",     "第 2 章", "貝斯基礎：認識你的指板", "四條弦・指板音名・鋼琴 vs 貝斯"),
-    ("ch3-scales.html",   "第 3 章", "調與音階", "調・音階公式・五聲音階・關係調・調式"),
-    ("ch4-chords.html",   "第 4 章", "和聲：音程與和弦", "音程・三和弦・七和弦・sus/aug/dim・轉位"),
-    ("ch5-progressions.html", "第 5 章", "和弦進行與羅馬數字", "順階和弦・級數功能・經典進行"),
-    ("ch6-notation.html", "第 6 章", "記譜法：看懂樂譜與 TAB", "五線譜・貝斯 TAB・音符時值・附點"),
-    ("ch7-rhythm.html",   "第 7 章", "節奏與拍子", "BPM・小節・拍號・強弱拍"),
-    ("ch8-circle.html",   "第 8 章", "五度圈", "調號・升降記號・關係小調・和弦進行地圖"),
+    # (檔名, 編號顯示, 標題, 副標, meta description)
+    ("index.html",  "",   "Bass 樂理互動教室", "",
+     "中文貝斯樂理互動學習網站：可發聲的鋼琴鍵盤與貝斯指板、音階與和弦播放器、節奏機與互動五度圈，8 個章節帶你從零開始學會 bass 樂理。"),
+    ("ch1-piano.html",    "第 1 章", "鋼琴基礎：12 音的世界", "12 音循環・音名・全音與半音",
+     "認識 12 音循環、音名與升降記號、全音與半音——用可點擊發聲的互動鋼琴鍵盤打好樂理基礎，附找 C 遊戲與步伐測驗。"),
+    ("ch2-bass.html",     "第 2 章", "貝斯基礎：認識你的指板", "四條弦・指板音名・鋼琴 vs 貝斯",
+     "貝斯四條弦 E–A–D–G、指板音名與八度規律，鋼琴與貝斯同步對照互動，用半音階記住整個指板，附指板音名測驗。"),
+    ("ch3-scales.html",   "第 3 章", "調與音階", "調・音階公式・五聲音階・關係調・調式",
+     "大調、小調、五聲與藍調音階公式，關係調與七個調式——互動音階實驗室讓你邊看指型邊聽聲音，附大小調聽力測驗。"),
+    ("ch4-chords.html",   "第 4 章", "和聲：音程與和弦", "音程・三和弦・七和弦・sus/aug/dim・轉位",
+     "12 種音程與和弦公式：maj、min、7、maj7、sus、aug、dim 與轉位，全部可播放試聽、可與大三和弦比較，附音程與和弦聽力測驗。"),
+    ("ch5-progressions.html", "第 5 章", "和弦進行與羅馬數字", "順階和弦・級數功能・經典進行",
+     "順階和弦、羅馬數字與級數功能，I–V–vi–IV 等經典進行可自由拼裝，配上鼓組與三種貝斯伴奏模式循環播放。"),
+    ("ch6-notation.html", "第 6 章", "記譜法：看懂樂譜與 TAB", "五線譜・貝斯 TAB・音符時值・附點",
+     "五分鐘看懂貝斯 TAB 與音符時值：互動 TAB 播放器跟著亮起的數字聽，全音符到十六分音符與附點節奏全部有聲音示範。"),
+    ("ch7-rhythm.html",   "第 7 章", "節奏與拍子", "BPM・小節・拍號・強弱拍",
+     "BPM、拍號與強弱拍：互動節拍器體驗 2/4、3/4、4/4 的差別，16 格節奏機自己做 groove，附拍號聽力測驗。"),
+    ("ch8-circle.html",   "第 8 章", "五度圈", "調號・升降記號・關係小調・和弦進行地圖",
+     "互動五度圈：調號、關係小調與 I–IV–V 一眼看懂，點圈上任何調即可試聽音階與和弦，附五度圈反應測驗。"),
 ]
 SHORT = ["首頁","1 鋼琴","2 貝斯","3 音階","4 和弦","5 進行","6 記譜","7 節奏","8 五度圈"]
 
@@ -29,7 +41,7 @@ js  = read("common.js")
 
 def nav(active_idx):
     links = []
-    for i,(fn,_,_,_) in enumerate(CHAPTERS):
+    for i,(fn,_,_,_,_) in enumerate(CHAPTERS):
         cls = "chip active" if i==active_idx else "chip"
         links.append(f'<a class="{cls}" href="{fn}">{SHORT[i]}</a>')
     return ('<nav class="topnav"><span class="brand">🎸 Bass 樂理互動教室</span>'
@@ -38,43 +50,77 @@ def nav(active_idx):
 def pagenav(idx):
     prev_a = next_a = ""
     if idx > 0:
-        fn,num,title,_ = CHAPTERS[idx-1]
+        fn,num,title,_,_ = CHAPTERS[idx-1]
         label = f"{num}　{title}" if num else title
         prev_a = f'<a href="{fn}"><div class="dir">← 上一章</div><div class="ttl">{label}</div></a>'
     else:
         prev_a = "<span></span>"
     if idx < len(CHAPTERS)-1:
-        fn,num,title,_ = CHAPTERS[idx+1]
+        fn,num,title,_,_ = CHAPTERS[idx+1]
         next_a = f'<a href="{fn}" style="text-align:right"><div class="dir">下一章 →</div><div class="ttl">{num}　{title}</div></a>'
     else:
         next_a = "<span></span>"
     return f'<div class="pagenav">{prev_a}{next_a}</div>'
 
+FAVICON = ("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>"
+           "<text y='.9em' font-size='90'>🎸</text></svg>")
+
 def build(idx, body_file, script_file):
-    fn, num, title, sub = CHAPTERS[idx]
+    fn, num, title, sub, desc = CHAPTERS[idx]
     body = read(body_file)
     script = read(script_file) if script_file else ""
     hero = ""
     if idx > 0:
-        hero = (f'<div class="hero"><div class="kicker">{num}｜{sub}</div>'
+        hero = (f'<div class="hero"><div class="kicker-row">'
+                f'<span class="chbadge">CH 0{idx}</span>'
+                f'<span class="kicker">{sub}</span></div>'
                 f'<h1>{title}</h1></div>')
+    slug = fn.replace(".html", "")
+    full_title = title if idx == 0 else f"{title}｜{SITE_NAME}"
+    og_title = full_title
+    page_url = SITE_BASE + ("" if idx == 0 else fn)
+    og_img = f"{SITE_BASE}og/{slug}.png"
     html = f"""<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title}｜Bass 樂理互動教室</title>
+<title>{full_title}</title>
+<meta name="description" content="{desc}">
+<link rel="canonical" href="{page_url}">
+<link rel="icon" href="{FAVICON}">
+<meta name="theme-color" content="#0f1117">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{SITE_NAME}">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:title" content="{og_title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:url" content="{page_url}">
+<meta property="og:image" content="{og_img}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{og_title}">
+<meta name="twitter:description" content="{desc}">
+<meta name="twitter:image" content="{og_img}">
 <style>
 {css}
 </style>
 </head>
-<body>
+<body data-page="{slug}">
 {nav(idx)}
-<div class="wrap">
+{f'<div class="chprogress"><div style="width:{round(idx/8*100)}%"></div></div>' if idx > 0 else ''}
+{f'''<div class="wrap with-rail"><div class="main">
 {hero}
 {body}
 {pagenav(idx)}
 </div>
+<aside class="toc-rail"><div class="toc-box"><div class="toc-head">本章目錄</div><nav id="toc"></nav></div></aside>
+</div>''' if idx > 0 else f'''<div class="wrap">
+{hero}
+{body}
+{pagenav(idx)}
+</div>'''}
 <script>
 {js}
 </script>
