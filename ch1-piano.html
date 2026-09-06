@@ -234,6 +234,7 @@ table.tbl td .play-ico{cursor:pointer;color:var(--accent);font-weight:700}
 .instrument{width:100%;overflow-x:auto;padding:4px 0}
 .instrument svg{display:block;margin:0 auto}
 svg text{user-select:none;-webkit-user-select:none}
+.instrument svg text{pointer-events:none}
 .clickable{cursor:pointer}
 
 /* ===== index 首頁 ===== */
@@ -415,7 +416,22 @@ function nameToPc(name){
 
 /* ---------- 音訊引擎 ---------- */
 const AudioEngine = (() => {
-  let ctx = null, master = null;
+  let ctx = null, master = null, silentEl = null;
+  /* iOS Safari：Web Audio 預設走「鈴聲」音訊類別，手機切靜音就完全無聲。
+     播放一個無聲的 <audio>（媒體類別）可把整頁音訊切到「媒體播放」，
+     靜音鍵就不會蓋掉聲音。 */
+  const SILENT_WAV="data:audio/wav;base64,UklGRkQDAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YSADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==";
+  function iosUnlock(){
+    try{
+      if(!silentEl){
+        silentEl=document.createElement("audio");
+        silentEl.setAttribute("playsinline","");
+        silentEl.loop=true;
+        silentEl.src=SILENT_WAV;
+      }
+      if(silentEl.paused) silentEl.play().catch(()=>{});
+    }catch(e){}
+  }
   function ensure(){
     if(!ctx){
       ctx = new (window.AudioContext||window.webkitAudioContext)();
@@ -425,9 +441,19 @@ const AudioEngine = (() => {
       comp.threshold.value = -14; comp.ratio.value = 6;
       master.connect(comp); comp.connect(ctx.destination);
     }
-    if(ctx.state==="suspended") ctx.resume();
+    iosUnlock();
+    if(ctx.state!=="running"){ try{ctx.resume();}catch(e){} }
     return ctx;
   }
+  /* iOS：來電、切換 App 或鎖屏後音訊會被中斷，回到頁面／再次觸碰時自動恢復 */
+  document.addEventListener("visibilitychange",()=>{
+    if(!document.hidden && ctx && ctx.state!=="running"){ try{ctx.resume();}catch(e){} }
+  });
+  ["touchend","click"].forEach(evt=>{
+    document.addEventListener(evt,()=>{
+      if(ctx){ iosUnlock(); if(ctx.state!=="running"){ try{ctx.resume();}catch(e){} } }
+    },{passive:true});
+  });
   /* 貝斯撥弦音色：saw+sub sine、低通濾波、快速起音長衰減 */
   function bass(midi, when, dur, vel){
     const c = ensure();
