@@ -29,8 +29,10 @@ CHAPTERS = [
      "BPM、拍號與強弱拍：互動節拍器體驗 2/4、3/4、4/4 的差別，16 格節奏機自己做 groove，附拍號聽力測驗。"),
     ("ch8-circle.html",   "第 8 章", "五度圈", "調號・升降記號・關係小調・和弦進行地圖",
      "互動五度圈：調號、關係小調與 I–IV–V 一眼看懂，點圈上任何調即可試聽音階與和弦，附五度圈反應測驗。"),
+    ("game.html", "", "闖關模式：邊玩邊學", "指板尋寶・耳朵大冒險・節奏跟拍",
+     "18 個關卡的貝斯樂理小遊戲：限時指板尋寶、聽力大冒險、節奏跟拍，收集星星與經驗值，零基礎也能邊玩邊學。"),
 ]
-SHORT = ["首頁","1 鋼琴","2 貝斯","3 音階","4 和弦","5 進行","6 記譜","7 節奏","8 五度圈"]
+SHORT = ["首頁","1 鋼琴","2 貝斯","3 音階","4 和弦","5 進行","6 記譜","7 節奏","8 五度圈","🎮 闖關"]
 
 def read(p):
     with io.open(os.path.join(SRC, p), encoding="utf-8") as f:
@@ -67,10 +69,11 @@ FAVICON = ("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='
 
 def build(idx, body_file, script_file):
     fn, num, title, sub, desc = CHAPTERS[idx]
+    is_chapter = 1 <= idx <= 8
     body = read(body_file)
     script = read(script_file) if script_file else ""
     hero = ""
-    if idx > 0:
+    if is_chapter:
         hero = (f'<div class="hero"><div class="kicker-row">'
                 f'<span class="chbadge">CH 0{idx}</span>'
                 f'<span class="kicker">{sub}</span></div>'
@@ -109,14 +112,14 @@ def build(idx, body_file, script_file):
 </head>
 <body data-page="{slug}">
 {nav(idx)}
-{f'<div class="chprogress"><div style="width:{round(idx/8*100)}%"></div></div>' if idx > 0 else ''}
+{f'<div class="chprogress"><div style="width:{round(idx/8*100)}%"></div></div>' if is_chapter else ''}
 {f'''<div class="wrap with-rail"><div class="main">
 {hero}
 {body}
 {pagenav(idx)}
 </div>
 <aside class="toc-rail"><div class="toc-box"><div class="toc-head">本章目錄</div><nav id="toc"></nav></div></aside>
-</div>''' if idx > 0 else f'''<div class="wrap">
+</div>''' if is_chapter else f'''<div class="wrap">
 {hero}
 {body}
 {pagenav(idx)}
@@ -143,6 +146,7 @@ PAGES = [
     (6, "ch6_body.html", "ch6_script.js"),
     (7, "ch7_body.html", "ch7_script.js"),
     (8, "ch8_body.html", "ch8_script.js"),
+    (9, "game_body.html", "game_script.js"),
 ]
 
 if __name__ == "__main__":

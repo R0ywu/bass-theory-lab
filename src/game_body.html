@@ -1,0 +1,100 @@
+<style>
+/* ===== 闖關模式專用樣式 ===== */
+.g-hero{padding:34px 0 8px}
+.g-hero h1{font-size:34px;font-weight:900;margin:8px 0}
+.g-hero .kicker{color:var(--accent);font-weight:700;letter-spacing:3px;font-size:13px}
+.g-stats{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0 6px}
+.g-stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 20px;display:flex;align-items:center;gap:12px}
+.g-stat .n{font-size:22px;font-weight:900;color:var(--accent)}
+.g-stat .l{font-size:12px;color:var(--muted)}
+.g-stat.title-card .n{color:var(--accent2);font-size:18px}
+.g-xpbar{flex:1;min-width:220px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 20px}
+.g-xpbar .row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px}
+.g-xpbar .bar{height:8px;border-radius:4px;background:var(--card2)}
+.g-xpbar .bar>div{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--accent),#ffc75e)}
+
+.g-map{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px;margin-top:22px}
+.g-lv{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;cursor:pointer;position:relative;transition:transform .1s,border-color .15s}
+.g-lv:hover{transform:translateY(-2px);border-color:var(--accent)}
+.g-lv.locked{opacity:.45;cursor:not-allowed}
+.g-lv.locked:hover{transform:none;border-color:var(--line)}
+.g-lv .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.g-lv .no{font-size:12px;font-weight:900;letter-spacing:2px;color:var(--accent)}
+.g-lv .type{font-size:11px;border-radius:6px;padding:2px 8px;font-weight:700}
+.g-lv .type.hunt{color:var(--accent2);background:rgba(79,195,247,.12)}
+.g-lv .type.ear{color:var(--purple);background:rgba(183,140,247,.12)}
+.g-lv .type.rhythm{color:var(--green);background:rgba(102,217,163,.12)}
+.g-lv h3{font-size:15.5px;margin:0 0 4px}
+.g-lv .sub{font-size:12px;color:var(--muted);line-height:1.5;min-height:36px}
+.g-lv .stars{font-size:16px;letter-spacing:2px;margin-top:8px}
+.g-lv .stars .on{color:var(--accent)}
+.g-lv .stars .off{color:var(--card2)}
+
+/* 遊玩區 */
+#g-play{display:none}
+.g-playhead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:20px 0 14px}
+.g-playhead .back{cursor:pointer;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 16px;font-size:14px;color:var(--text)}
+.g-playhead h2{font-size:22px;font-weight:900;margin:0}
+.g-hud{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0 14px}
+.g-chip{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 16px;font-size:14px;font-weight:700}
+.g-chip b{color:var(--accent)}
+.g-chip.time b{font-family:ui-monospace,Menlo,monospace;font-size:17px}
+.g-arena{background:linear-gradient(180deg,#1e2432,#1a1f2b);border:1px solid var(--line);border-radius:16px;padding:22px;min-height:260px}
+.g-msg{font-size:15px;margin:12px 0;min-height:24px;font-weight:700}
+.g-msg.ok{color:var(--green)}
+.g-msg.no{color:var(--red)}
+.g-bigplay{display:flex;justify-content:center;margin:14px 0}
+.g-tap{
+  user-select:none;-webkit-user-select:none;touch-action:manipulation;
+  background:var(--accent);color:#141414;font-size:22px;font-weight:900;
+  border:none;border-radius:18px;width:100%;max-width:420px;height:130px;cursor:pointer;
+  font-family:inherit;transition:transform .05s;
+}
+.g-tap:active{transform:scale(.97)}
+.g-feedback{text-align:center;font-size:30px;font-weight:900;min-height:44px;margin-top:10px}
+.g-result{text-align:center;padding:30px 10px}
+.g-result .big{font-size:52px;letter-spacing:6px}
+.g-result .big .on{color:var(--accent)}
+.g-result .big .off{color:var(--card2)}
+.g-result h3{font-size:24px;margin:10px 0 4px}
+.g-result p{color:var(--muted)}
+.g-hearts{font-size:20px;letter-spacing:3px}
+.g-dots{display:flex;gap:6px;align-items:center}
+.g-dots span{width:10px;height:10px;border-radius:50%;background:var(--card2);display:inline-block}
+.g-dots span.ok{background:var(--green)}
+.g-dots span.no{background:var(--red)}
+.g-dots span.now{background:var(--accent)}
+@media (max-width:640px){.g-hero h1{font-size:26px}}
+</style>
+
+<div class="g-hero">
+  <div class="kicker">GAME MODE・零基礎友善</div>
+  <h1>🎮 闖關模式：邊玩邊學</h1>
+  <p class="lead" style="color:var(--muted);max-width:680px">不用先懂任何樂理——從 Lv.1 開始一關一關解鎖，每關 2–3 分鐘。三種挑戰輪流出現：<b style="color:var(--accent2)">指板尋寶</b>（練音名位置）、<b style="color:var(--purple)">耳朵大冒險</b>（練聽力）、<b style="color:var(--green)">節奏跟拍</b>（練拍子）。拿到 1 顆星就能解鎖下一關；卡關了，關卡說明會告訴你該回哪一章複習。</p>
+</div>
+
+<div class="g-stats">
+  <div class="g-stat"><span class="n" id="g-stars-total">0</span><span class="l">星星<br>/ 54</span></div>
+  <div class="g-stat"><span class="n" id="g-xp">0</span><span class="l">XP<br>經驗值</span></div>
+  <div class="g-stat title-card"><span class="n" id="g-title">見習樂手</span><span class="l">目前稱號</span></div>
+  <div class="g-xpbar">
+    <div class="row"><span id="g-next-label">距離下一個稱號</span><span id="g-next-num"></span></div>
+    <div class="bar"><div id="g-xpfill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<div id="g-map" class="g-map"></div>
+
+<div id="g-play">
+  <div class="g-playhead">
+    <span class="back" id="g-back">← 回關卡地圖</span>
+    <h2 id="g-play-title"></h2>
+  </div>
+  <div id="g-play-desc" class="note" style="margin-top:0"></div>
+  <div class="g-hud" id="g-hud"></div>
+  <div class="g-arena" id="g-arena"></div>
+</div>
+
+<div style="margin-top:40px;display:flex;justify-content:flex-end">
+  <button class="btn small secondary" id="g-reset">重置全部進度</button>
+</div>
