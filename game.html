@@ -1304,6 +1304,7 @@ function playRhythm(lv){
   const total=cfg.bars*4*cfg.sub;
   let expected=[], matched=[], running=false, doneFlag=false, endTimer=null;
   let stats={p:0,g:0}, combo=0;
+  let latency=0, offset=0, pulseTimers=[];
   $("#g-hud").innerHTML=`
     <div class="g-chip">BPM <b>${cfg.bpm}</b></div>
     <div class="g-chip">${cfg.sub===1?"每拍點 1 下":"每拍點 2 下（八分音符）"}・${cfg.bars} 小節</div>
@@ -1314,14 +1315,29 @@ function playRhythm(lv){
     <div class="g-bigplay"><button class="btn" id="gr-start" style="font-size:17px;padding:14px 40px">▶ 開始</button></div>
     <div class="g-bigplay"><button class="g-tap" id="gr-tap">🥁 點我跟拍</button></div>
     <div class="g-feedback" id="gr-fb"></div>`;
+  function pulse(accent){
+    const pad=$("#gr-tap"); if(!pad)return;
+    pad.style.boxShadow=accent?"0 0 0 8px rgba(245,166,35,.55)":"0 0 0 5px rgba(79,195,247,.45)";
+    setTimeout(()=>{ if(pad)pad.style.boxShadow="none"; },110);
+  }
   function start(){
     if(running)return;
-    running=true; expected=[]; matched=[]; stats={p:0,g:0}; combo=0;
+    running=true; expected=[]; matched=[]; stats={p:0,g:0}; combo=0; offset=0;
+    pulseTimers.forEach(id=>clearTimeout(id)); pulseTimers=[];
     $("#gr-combo").textContent="0"; $("#gr-fb").textContent="";
     const c=AudioEngine.ensure();
-    const t0=c.currentTime+0.25;
-    /* 前導 1 小節 */
-    for(let b=0;b<4;b++) AudioEngine.click(t0+b*beat, b===0);
+    /* 補償裝置音訊延遲（藍牙耳機可達 0.2 秒以上）*/
+    latency=Math.min(0.35,(c.outputLatency||0)+(c.baseLatency||0));
+    const t0=c.currentTime+0.35;
+    /* 前導 1 小節（畫面同步倒數）*/
+    for(let b=0;b<4;b++){
+      AudioEngine.click(t0+b*beat, b===0);
+      pulseTimers.push(setTimeout(()=>{
+        const fb=$("#gr-fb");
+        if(fb&&running){fb.textContent=["4","3","2","1"][b];fb.style.color="var(--muted)";}
+        pulse(b===0);
+      },(t0+b*beat+latency-c.currentTime)*1000));
+    }
     const play0=t0+4*beat;
     for(let i=0;i<total;i++){
       const t=play0+i*step;
@@ -1332,8 +1348,11 @@ function playRhythm(lv){
         const bi=(i/cfg.sub)%4;
         AudioEngine.drum(t, (bi===0||bi===2)?"kick":"snare");
       }
+      /* 視覺節拍：按鈕跟著閃 */
+      pulseTimers.push(setTimeout(()=>{ if(running)pulse(onBeat&&(i/cfg.sub)%4===0); },
+        (t+latency-c.currentTime)*1000));
     }
-    const endT=(play0+total*step+0.4-c.currentTime)*1000;
+    const endT=(play0+total*step+0.55-c.currentTime)*1000;
     endTimer=setTimeout(()=>{
       if(doneFlag)return;
       doneFlag=true; running=false;
@@ -1341,15 +1360,16 @@ function playRhythm(lv){
       const score=(stats.p+stats.g*0.6)/total;
       let stars=0;
       if(missed<=total*0.1 && score>=0.85)stars=3;
-      else if(score>=0.65)stars=2;
-      else if(score>=0.4)stars=1;
+      else if(score>=0.6)stars=2;
+      else if(score>=0.35)stars=1;
       gFinish(lv,stars);
     }, endT);
   }
   function tap(){
-    AudioEngine.ensure();
+    const c=AudioEngine.ensure();
     if(!running)return;
-    const t=AudioEngine.now();
+    /* 扣掉裝置延遲與個人偏移後再比對 */
+    const t=c.currentTime-latency-offset;
     let best=-1,bestD=1e9;
     expected.forEach((et,i)=>{
       if(matched[i])return;
@@ -1357,16 +1377,28 @@ function playRhythm(lv){
       if(d<bestD){bestD=d;best=i;}
     });
     const fb=$("#gr-fb");
-    if(best>=0 && bestD<=0.09){ matched[best]=true; stats.p++; combo++;
+    const signed=best>=0? t-expected[best]:0;
+    if(best>=0 && bestD<=0.12){ matched[best]=true; stats.p++; combo++;
       fb.textContent="PERFECT！"; fb.style.color="var(--green)"; }
-    else if(best>=0 && bestD<=0.18){ matched[best]=true; stats.g++; combo++;
+    else if(best>=0 && bestD<=0.25){ matched[best]=true; stats.g++; combo++;
       fb.textContent="GOOD"; fb.style.color="var(--accent2)"; }
-    else{ combo=0; fb.textContent=bestD>0.3?"…等節拍來再點":"MISS"; fb.style.color="var(--red)"; }
+    else{
+      combo=0;
+      if(bestD>0.4){ fb.textContent="…等節拍來再點"; }
+      else{ fb.textContent=signed<0?"早了一點！":"晚了一點！"; }
+      fb.style.color="var(--red)";
+    }
+    /* 自動校正：往你的穩定偏移靠攏（節奏穩比絕對準更重要）*/
+    if(best>=0 && bestD<=0.25){
+      offset=Math.max(-0.25,Math.min(0.25, offset+signed*0.35));
+    }
     $("#gr-combo").textContent=combo;
   }
   $("#gr-start").addEventListener("click",start);
   $("#gr-tap").addEventListener("pointerdown",e=>{e.preventDefault();tap();});
-  gCleanup=()=>{ doneFlag=true; running=false; if(endTimer)clearTimeout(endTimer); };
+  gCleanup=()=>{ doneFlag=true; running=false;
+    if(endTimer)clearTimeout(endTimer);
+    pulseTimers.forEach(id=>clearTimeout(id)); pulseTimers=[]; };
 }
 
 /* ---------- 初始化 ---------- */
