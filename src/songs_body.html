@@ -1,0 +1,77 @@
+<style>
+/* ===== 練習曲目庫專用樣式 ===== */
+.sg-hero{padding:34px 0 8px}
+.sg-hero h1{font-size:34px;font-weight:900;margin:8px 0}
+.sg-hero .kicker{color:var(--accent);font-weight:700;letter-spacing:3px;font-size:13px}
+.sg-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:12px 0}
+.sg-form .full{grid-column:1/-1}
+.sg-form input,.sg-form textarea{width:100%;background:var(--card2);color:var(--text);border:1px solid var(--line2);border-radius:9px;padding:9px 12px;font-size:14px;font-family:inherit}
+.sg-form textarea{min-height:64px;resize:vertical}
+.sg-form label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+.sg-list{display:flex;flex-direction:column;gap:16px;margin-top:18px}
+.sg-card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.sg-card .head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.sg-card .head h3{font-size:17px;margin:0;flex:1;min-width:160px}
+.sg-card .meta{display:flex;gap:6px;flex-wrap:wrap}
+.sg-card .meta span{font-size:11.5px;background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:2px 9px;color:var(--accent2)}
+.sg-card .video{position:relative;width:100%;padding-top:56.25%;background:#000}
+.sg-card .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.sg-card .body{padding:12px 18px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.sg-card .notes{flex:1;min-width:220px;font-size:13.5px;color:var(--body);white-space:pre-wrap;line-height:1.7}
+.sg-card .side{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.sg-filter{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:16px}
+.sg-empty{color:var(--muted);font-size:14px;background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:22px;text-align:center;margin-top:16px}
+@media (max-width:640px){.sg-hero h1{font-size:26px}}
+</style>
+
+<div class="sg-hero">
+  <div class="kicker">SONGBOOK・我的練習清單</div>
+  <h1>🎵 練習曲目庫</h1>
+  <p class="lead" style="color:var(--muted);max-width:700px">把正在練的曲子收進來：貼上 YouTube 連結就能在這頁直接播放，搭配你手上的譜（例如 Rockschool 檢定教材）邊看邊彈。每首可以記調性、BPM、段落重點和練成度——所有資料存在這個瀏覽器裡，用「匯出」可以搬到別台裝置。</p>
+</div>
+
+<div class="panel">
+  <div class="panel-title">新增曲目</div>
+  <div class="sg-form">
+    <div><label>曲名 *</label><input id="sg-title" placeholder="例：Longview"></div>
+    <div><label>演出者</label><input id="sg-artist" placeholder="例：Green Day"></div>
+    <div><label>分類／級數</label><input id="sg-grade" list="sg-grades" placeholder="例：RSL Grade 3">
+      <datalist id="sg-grades">
+        <option value="RSL Debut"></option><option value="RSL Grade 1"></option>
+        <option value="RSL Grade 2"></option><option value="RSL Grade 3"></option>
+        <option value="RSL Grade 4"></option><option value="RSL Grade 5"></option>
+        <option value="RSL Grade 6"></option><option value="RSL Grade 7"></option>
+        <option value="RSL Grade 8"></option><option value="自選曲"></option>
+      </datalist></div>
+    <div class="full"><label>YouTube 連結 *</label><input id="sg-url" placeholder="貼上影片網址（youtube.com/watch?v=… 或 youtu.be/…）"></div>
+    <div><label>調性</label><input id="sg-key" placeholder="例：E 小調"></div>
+    <div><label>BPM</label><input id="sg-bpm" placeholder="例：148"></div>
+    <div><label>從第幾秒開始播（選填）</label><input id="sg-start" placeholder="例：35"></div>
+    <div class="full"><label>練習筆記（段落重點、指法、易錯處…）</label><textarea id="sg-notes" placeholder="例：副歌第二遍的過門要用中指起手；橋段 slide 到 12 格別衝太快"></textarea></div>
+  </div>
+  <div class="controls">
+    <button class="btn" id="sg-add">＋ 加入曲目庫</button>
+    <span class="quiz-fb" id="sg-msg" style="margin:0"></span>
+  </div>
+  <div class="hint">⚠️ 這頁只存<b>連結與你自己的筆記</b>。教材裡的譜（如 Rockschool 書）屬於出版社版權，請對照你購買的書練習，不要把掃描或重製的譜面放上公開網站。</div>
+</div>
+
+<div class="panel">
+  <div class="panel-title">Rockschool Bass Grade 1 快速範本</div>
+  <p style="font-size:14px;color:var(--muted);margin:4px 0 10px">六首檢定曲的基本資料已幫你整理好（曲名、速度、調性、技巧重點、書中頁碼）。按「帶入表單」→ 用「搜尋」找到官方音源 → 貼上連結按加入。<b>譜面請翻你購買的教材</b>，這裡只放播放連結與筆記。</p>
+  <div id="sg-seed" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px"></div>
+</div>
+
+<div class="sg-filter" id="sg-filter"></div>
+<div class="sg-list" id="sg-list"></div>
+<div class="sg-empty" id="sg-empty" style="display:none">曲目庫還是空的——上面貼一個 YouTube 連結，開始建立你的練習清單吧！</div>
+
+<div class="panel" style="margin-top:30px">
+  <div class="panel-title">備份與搬家</div>
+  <div class="controls">
+    <button class="btn secondary" id="sg-export">📤 匯出 JSON</button>
+    <button class="btn secondary" id="sg-import">📥 匯入 JSON</button>
+  </div>
+  <textarea id="sg-io" class="mono" style="width:100%;min-height:90px;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px;display:none"></textarea>
+  <div class="hint" id="sg-iohint" style="display:none"></div>
+</div>

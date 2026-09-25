@@ -118,7 +118,7 @@ const AudioEngine = (() => {
     o.connect(g); g.connect(master);
     o.start(t); o.stop(t+0.09);
   }
-  function drum(when, kind){ // kick / snare 簡易
+  function drum(when, kind){ // kick / snare / hhc(閉合鈸) / hho(開放鈸) 簡易合成
     const c=ensure();
     const t=(when===undefined||when===null)?c.currentTime+0.02:when;
     if(kind==="kick"){
@@ -128,6 +128,20 @@ const AudioEngine = (() => {
       const g=c.createGain();
       g.gain.setValueAtTime(0.9,t); g.gain.exponentialRampToValueAtTime(0.0001,t+0.22);
       o.connect(g); g.connect(master); o.start(t); o.stop(t+0.25);
+    }else if(kind==="hhc"||kind==="hho"){
+      const dur = kind==="hho"? 0.38 : 0.06;
+      const len=Math.ceil(c.sampleRate*(dur+0.02));
+      const buf=c.createBuffer(1,len,c.sampleRate);
+      const d=buf.getChannelData(0);
+      for(let i=0;i<len;i++) d[i]=Math.random()*2-1;
+      const src=c.createBufferSource(); src.buffer=buf;
+      const hp=c.createBiquadFilter(); hp.type="highpass"; hp.frequency.value=7500;
+      const g=c.createGain();
+      const pk = kind==="hho"? 0.20 : 0.24;
+      g.gain.setValueAtTime(pk,t);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      src.connect(hp); hp.connect(g); g.connect(master);
+      src.start(t); src.stop(t+dur+0.02);
     }else{
       const len=c.sampleRate*0.15;
       const buf=c.createBuffer(1,len,c.sampleRate);

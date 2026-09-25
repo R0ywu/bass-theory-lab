@@ -1,0 +1,68 @@
+<style>
+/* ===== Groove 節奏機專用樣式 ===== */
+.gr-hero{padding:34px 0 8px}
+.gr-hero h1{font-size:34px;font-weight:900;margin:8px 0}
+.gr-hero .kicker{color:var(--accent);font-weight:700;letter-spacing:3px;font-size:13px}
+.gr-machine{background:linear-gradient(180deg,#1e2432,#1a1f2b);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:20px;overflow-x:auto}
+.gr-row{display:flex;align-items:center;gap:5px;margin-bottom:6px}
+.gr-label{width:112px;flex-shrink:0;font-size:13px;font-weight:700;display:flex;align-items:center;gap:7px}
+.gr-label .sw{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.gr-cell{flex:1;min-width:26px;height:40px;border-radius:7px;cursor:pointer;border:1px solid var(--line);background:var(--card2);transition:background .05s}
+.gr-cell.bh{background:#2a3040}
+.gr-cell.on{border-color:transparent}
+.gr-cell.ph{outline:2px solid rgba(232,236,244,.75);outline-offset:-2px}
+.gr-beatnums{display:flex;gap:5px;margin-bottom:8px}
+.gr-beatnums .sp{width:112px;flex-shrink:0}
+.gr-beatnums .n{flex:1;min-width:26px;text-align:center;font-size:11px;color:var(--muted)}
+.gr-saved{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.gr-saved .item{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 14px}
+.gr-saved .item b{flex:1}
+@media (max-width:640px){.gr-hero h1{font-size:26px}.gr-label{width:88px;font-size:12px}}
+</style>
+
+<div class="gr-hero">
+  <div class="kicker">GROOVE LAB・自由創作</div>
+  <h1>🥁 Groove 節奏機</h1>
+  <p class="lead" style="color:var(--muted);max-width:700px">自己設計鼓組節奏：點亮格子安排 Kick、Snare、閉合／開放 Hi-hat 和貝斯根音，調速度、加 swing，設計出你想練的 groove——然後拿起貝斯跟著它練。做好的 groove 可以命名存起來，下次接著用。</p>
+</div>
+
+<div class="panel">
+  <div class="panel-title">節奏機（一小節・16 個十六分音符格）</div>
+  <div class="controls">
+    <button class="btn" id="gv-toggle">▶ 播放</button>
+    <label class="ctl">BPM <input type="range" id="gv-bpm" min="60" max="180" value="92" style="width:130px"><b class="mono" id="gv-bpmv" style="color:var(--accent);font-size:16px">92</b></label>
+    <label class="ctl">Swing <input type="range" id="gv-swing" min="0" max="60" value="0" style="width:90px"><span class="mono" id="gv-swingv">0%</span></label>
+    <label class="ctl">貝斯音 <select class="sel" id="gv-bassnote">
+      <option value="28">E（低音 E）</option>
+      <option value="31">G</option>
+      <option value="33" selected>A</option>
+      <option value="35">B</option>
+      <option value="36">C</option>
+      <option value="38">D</option>
+    </select></label>
+    <button class="btn secondary" id="gv-clear">✕ 清空</button>
+  </div>
+  <div class="controls">
+    <span style="font-size:13.5px;color:var(--muted)">經典 groove 範本：</span>
+    <div class="seg" id="gv-presets"></div>
+  </div>
+  <div class="gr-machine" id="gv-grid"></div>
+  <div class="hint">直的看：同一格裡點亮的軌會同時發聲。拍頭（1、2、3、4）底色較深；點亮格子時會先試聽那個音色。<b>Swing</b> 會把每對十六分音符變成「長—短」，放克和藍調的搖擺感就是這樣來的。</div>
+</div>
+
+<div class="panel">
+  <div class="panel-title">我的 Groove 存檔</div>
+  <div class="controls">
+    <input class="inp" id="gv-name" placeholder="幫這個 groove 取個名字…" style="min-width:220px">
+    <button class="btn" id="gv-save">💾 儲存目前的 groove</button>
+  </div>
+  <div class="gr-saved" id="gv-saved"></div>
+  <div class="hint">存檔保存在這個瀏覽器裡（localStorage）。載入會覆蓋目前畫面上的格子。</div>
+</div>
+
+<section class="lesson">
+  <h2>怎麼用它練琴？</h2>
+  <p><b>① 跟著範本練穩：</b>載入「8-Beat 搖滾」，貝斯音軌先只留拍頭，用你的貝斯跟著彈根音——跟鼓機合拍比跟節拍器有趣得多。</p>
+  <p><b>② 設計你的練習：</b>把想練的節奏型（例如切分、十六分休止）畫在貝斯軌上，先聽節奏機示範，再自己彈到完全重疊。</p>
+  <p><b>③ 慢練加速法：</b>從目標速度的 70% 開始，彈對三次無誤才 +5 BPM。swing 曲目記得把 swing 拉上去練，直拍練得再熟到了搖擺曲還是會跌倒。</p>
+</section>

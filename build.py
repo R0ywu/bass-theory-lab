@@ -31,8 +31,12 @@ CHAPTERS = [
      "互動五度圈：調號、關係小調與 I–IV–V 一眼看懂，點圈上任何調即可試聽音階與和弦，附五度圈反應測驗。"),
     ("game.html", "", "闖關模式：邊玩邊學", "指板尋寶・耳朵大冒險・節奏跟拍",
      "18 個關卡的貝斯樂理小遊戲：限時指板尋寶、聽力大冒險、節奏跟拍，收集星星與經驗值，零基礎也能邊玩邊學。"),
+    ("songs.html", "", "練習曲目庫", "YouTube 播放・個人筆記・練成度追蹤",
+     "把正在練的曲子收進清單：內嵌 YouTube 播放搭配你手上的譜，記錄調性、BPM、段落重點與練成度，支援 JSON 匯出匯入。"),
+    ("groove.html", "", "Groove 節奏機", "自訂 Kick・Snare・Hi-hat・貝斯根音",
+     "多軌 16 格節奏機：自訂 Kick、Snare、閉合與開放 Hi-hat 和貝斯根音，調 BPM 與 swing，設計自己的 groove 練習並存檔。"),
 ]
-SHORT = ["首頁","1 鋼琴","2 貝斯","3 音階","4 和弦","5 進行","6 記譜","7 節奏","8 五度圈","🎮 闖關"]
+SHORT = ["首頁","1 鋼琴","2 貝斯","3 音階","4 和弦","5 進行","6 記譜","7 節奏","8 五度圈","🎮 闖關","🎵 曲庫","🥁 節奏機"]
 
 def read(p):
     with io.open(os.path.join(SRC, p), encoding="utf-8") as f:
@@ -147,6 +151,8 @@ PAGES = [
     (7, "ch7_body.html", "ch7_script.js"),
     (8, "ch8_body.html", "ch8_script.js"),
     (9, "game_body.html", "game_script.js"),
+    (10, "songs_body.html", "songs_script.js"),
+    (11, "groove_body.html", "groove_script.js"),
 ]
 
 if __name__ == "__main__":

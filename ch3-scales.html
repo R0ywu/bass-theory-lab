@@ -303,7 +303,7 @@ svg text{user-select:none;-webkit-user-select:none}
 </style>
 </head>
 <body data-page="ch3-scales">
-<nav class="topnav"><span class="brand">🎸 Bass 樂理互動教室</span><div class="links"><a class="chip" href="index.html">首頁</a><a class="chip" href="ch1-piano.html">1 鋼琴</a><a class="chip" href="ch2-bass.html">2 貝斯</a><a class="chip active" href="ch3-scales.html">3 音階</a><a class="chip" href="ch4-chords.html">4 和弦</a><a class="chip" href="ch5-progressions.html">5 進行</a><a class="chip" href="ch6-notation.html">6 記譜</a><a class="chip" href="ch7-rhythm.html">7 節奏</a><a class="chip" href="ch8-circle.html">8 五度圈</a><a class="chip" href="game.html">🎮 闖關</a></div></nav>
+<nav class="topnav"><span class="brand">🎸 Bass 樂理互動教室</span><div class="links"><a class="chip" href="index.html">首頁</a><a class="chip" href="ch1-piano.html">1 鋼琴</a><a class="chip" href="ch2-bass.html">2 貝斯</a><a class="chip active" href="ch3-scales.html">3 音階</a><a class="chip" href="ch4-chords.html">4 和弦</a><a class="chip" href="ch5-progressions.html">5 進行</a><a class="chip" href="ch6-notation.html">6 記譜</a><a class="chip" href="ch7-rhythm.html">7 節奏</a><a class="chip" href="ch8-circle.html">8 五度圈</a><a class="chip" href="game.html">🎮 闖關</a><a class="chip" href="songs.html">🎵 曲庫</a><a class="chip" href="groove.html">🥁 節奏機</a></div></nav>
 <div class="chprogress"><div style="width:38%"></div></div>
 <div class="wrap with-rail"><div class="main">
 <div class="hero"><div class="kicker-row"><span class="chbadge">CH 03</span><span class="kicker">調・音階公式・五聲音階・關係調・調式</span></div><h1>調與音階</h1></div>
@@ -552,7 +552,7 @@ const AudioEngine = (() => {
     o.connect(g); g.connect(master);
     o.start(t); o.stop(t+0.09);
   }
-  function drum(when, kind){ // kick / snare 簡易
+  function drum(when, kind){ // kick / snare / hhc(閉合鈸) / hho(開放鈸) 簡易合成
     const c=ensure();
     const t=(when===undefined||when===null)?c.currentTime+0.02:when;
     if(kind==="kick"){
@@ -562,6 +562,20 @@ const AudioEngine = (() => {
       const g=c.createGain();
       g.gain.setValueAtTime(0.9,t); g.gain.exponentialRampToValueAtTime(0.0001,t+0.22);
       o.connect(g); g.connect(master); o.start(t); o.stop(t+0.25);
+    }else if(kind==="hhc"||kind==="hho"){
+      const dur = kind==="hho"? 0.38 : 0.06;
+      const len=Math.ceil(c.sampleRate*(dur+0.02));
+      const buf=c.createBuffer(1,len,c.sampleRate);
+      const d=buf.getChannelData(0);
+      for(let i=0;i<len;i++) d[i]=Math.random()*2-1;
+      const src=c.createBufferSource(); src.buffer=buf;
+      const hp=c.createBiquadFilter(); hp.type="highpass"; hp.frequency.value=7500;
+      const g=c.createGain();
+      const pk = kind==="hho"? 0.20 : 0.24;
+      g.gain.setValueAtTime(pk,t);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      src.connect(hp); hp.connect(g); g.connect(master);
+      src.start(t); src.stop(t+dur+0.02);
     }else{
       const len=c.sampleRate*0.15;
       const buf=c.createBuffer(1,len,c.sampleRate);
