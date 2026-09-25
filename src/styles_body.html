@@ -1,0 +1,31 @@
+<style>
+/* ===== 曲風百科專用樣式 ===== */
+.st-hero{padding:34px 0 8px}
+.st-hero h1{font-size:34px;font-weight:900;margin:8px 0}
+.st-hero .kicker{color:var(--accent);font-weight:700;letter-spacing:3px;font-size:13px}
+.st-traits{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.st-traits span{font-size:12.5px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:4px 12px;color:var(--accent2)}
+.st-listen{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:10px 0}
+.st-listen a{display:flex;flex-direction:column;gap:3px;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:11px 14px;color:var(--text)}
+.st-listen a:hover{border-color:var(--accent);text-decoration:none}
+.st-listen b{font-size:14px}
+.st-listen small{color:var(--muted);font-size:12px;line-height:1.5}
+.st-tab{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:14.5px;line-height:1.9;overflow-x:auto;font-family:ui-monospace,Menlo,Consolas,monospace;white-space:pre}
+.st-ex{display:flex;flex-direction:column;gap:10px;margin:10px 0}
+.st-ex .item{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:12px 16px}
+.st-ex .n{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#141414;font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st-ex .t{font-size:14px;color:var(--body);line-height:1.7}
+@media (max-width:640px){.st-hero h1{font-size:26px}}
+</style>
+
+<div class="st-hero">
+  <div class="kicker">STYLE GUIDE・貝斯的八種語言</div>
+  <h1>🎼 曲風百科</h1>
+  <p class="lead" style="color:var(--muted);max-width:700px">同一把貝斯，在不同曲風裡說著完全不同的語言。這頁帶你認識八種曲風：它的個性、貝斯在裡面扮演的角色、值得聽的代表樂手，還有一段<b>可播放的原創示範 groove</b>（鼓組＋貝斯 TAB 同步亮格）和入門練習。</p>
+</div>
+
+<div class="controls" style="margin-top:18px">
+  <div class="seg" id="st-seg"></div>
+</div>
+
+<div id="st-content"></div>

@@ -35,8 +35,10 @@ CHAPTERS = [
      "把正在練的曲子收進清單：內嵌 YouTube 播放搭配你手上的譜，記錄調性、BPM、段落重點與練成度，支援 JSON 匯出匯入。"),
     ("groove.html", "", "Groove 節奏機", "自訂 Kick・Snare・Hi-hat・貝斯根音",
      "多軌 16 格節奏機：自訂 Kick、Snare、閉合與開放 Hi-hat 和貝斯根音，調 BPM 與 swing，設計自己的 groove 練習並存檔。"),
+    ("styles.html", "", "曲風百科：貝斯的八種語言", "Rock・Funk・Jazz・Metal・Blues…",
+     "八種曲風的貝斯導覽：曲風特色、貝斯的角色、代表樂手聆聽指南，配上可播放的原創示範 groove 與 TAB，以及入門練習建議。"),
 ]
-SHORT = ["首頁","1 鋼琴","2 貝斯","3 音階","4 和弦","5 進行","6 記譜","7 節奏","8 五度圈","🎮 闖關","🎵 曲庫","🥁 節奏機"]
+SHORT = ["首頁","1 鋼琴","2 貝斯","3 音階","4 和弦","5 進行","6 記譜","7 節奏","8 五度圈","🎮 闖關","🎵 曲庫","🥁 節奏機","🎼 曲風"]
 
 def read(p):
     with io.open(os.path.join(SRC, p), encoding="utf-8") as f:
@@ -153,6 +155,7 @@ PAGES = [
     (9, "game_body.html", "game_script.js"),
     (10, "songs_body.html", "songs_script.js"),
     (11, "groove_body.html", "groove_script.js"),
+    (12, "styles_body.html", "styles_script.js"),
 ]
 
 if __name__ == "__main__":
