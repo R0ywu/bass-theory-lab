@@ -5,7 +5,8 @@ const TRACKS=[
   {key:"hhp",  label:"HH Pedal", color:"#4fd7c3", play:()=>AudioEngine.drum(null,"hhp")},
   {key:"snare",label:"Snare",    color:"#ef8a8a", play:()=>AudioEngine.drum(null,"snare")},
   {key:"kick", label:"Kick",     color:"#f5a623", play:()=>AudioEngine.drum(null,"kick")},
-  {key:"bass", label:"Bass 根音", color:"#66d9a3", play:()=>AudioEngine.bass(gvBassNote(),null,0.3,0.9)}
+  {key:"bass", label:"Bass 拇指 T", color:"#66d9a3", play:()=>AudioEngine.bass(gvBassNote(),null,0.28,1.0)},
+  {key:"pop",  label:"Bass 勾弦 P", color:"#a8f06b", play:()=>AudioEngine.bass(gvBassNote()+12,null,0.2,0.95)}
 ];
 const STEPS=16;
 function emptyPat(){ const p={}; TRACKS.forEach(t=>p[t.key]=new Array(STEPS).fill(false)); return p; }
@@ -95,25 +96,44 @@ $("#gv-clear").addEventListener("click",()=>{ PAT=emptyPat(); gvPaint(); });
 /* ---------- 範本 ---------- */
 function mk(steps){ const a=new Array(STEPS).fill(false); steps.forEach(i=>a[i]=true); return a; }
 const PRESETS={
-  rock:{label:"8-Beat 搖滾",pat:{
+  rock:{label:"8-Beat 搖滾・100",bpm:100,swing:0,pat:{
     hho:mk([]), hhc:mk([0,2,4,6,8,10,12,14]),
     snare:mk([4,12]), kick:mk([0,8,10]), bass:mk([0,8,10])}},
-  funk:{label:"16-Beat 放克",pat:{
+  funk:{label:"16-Beat 放克・96",bpm:96,swing:0,pat:{
     hho:mk([7]), hhc:mk([0,1,2,3,4,5,6,8,9,10,11,12,13,14,15]),
     snare:mk([4,12]), kick:mk([0,3,6,10]), bass:mk([0,3,6,10])}},
-  disco:{label:"Disco 四大地板",pat:{
+  disco:{label:"Disco 四大地板・116",bpm:116,swing:0,pat:{
     hho:mk([2,6,10,14]), hhc:mk([0,4,8,12]),
     snare:mk([4,12]), kick:mk([0,4,8,12]), bass:mk([0,2,4,6,8,10,12,14])}},
-  half:{label:"Half-time 慢搖",pat:{
+  half:{label:"Half-time 慢搖・78",bpm:78,swing:0,pat:{
     hho:mk([14]), hhc:mk([0,2,4,6,8,10,12]), hhp:mk([4,12]),
-    snare:mk([8]), kick:mk([0,10]), bass:mk([0,10])}}
+    snare:mk([8]), kick:mk([0,10]), bass:mk([0,10])}},
+  /* ── Slap 系列（拇指 T ＝ Bass 拇指軌、勾弦 P ＝ Bass 勾弦軌）── */
+  slap8:{label:"Slap 八分基礎・90",bpm:90,swing:0,pat:{
+    hhc:mk([0,2,4,6,8,10,12,14]), snare:mk([4,12]), kick:mk([0,8]),
+    bass:mk([0,2,8,10]), pop:mk([4,12])}},
+  slap16:{label:"Slap 十六分放克・100",bpm:100,swing:0,pat:{
+    hho:mk([7]), hhc:mk([0,1,2,3,4,5,6,8,9,10,11,12,13,14,15]),
+    snare:mk([4,12]), kick:mk([0,6,10]),
+    bass:mk([0,3,6,10,13]), pop:mk([7,14])}},
+  slapOct:{label:"Slap 八度跳・112",bpm:112,swing:0,pat:{
+    hho:mk([2,6,10,14]), hhc:mk([0,4,8,12]),
+    snare:mk([4,12]), kick:mk([0,4,8,12]),
+    bass:mk([0,4,8,12]), pop:mk([2,6,10,14])}},
+  slapSwing:{label:"Slap 搖擺律動・84",bpm:84,swing:35,pat:{
+    hhc:mk([0,2,4,6,8,10,12,14]), hhp:mk([4,12]),
+    snare:mk([8]), kick:mk([0,10]),
+    bass:mk([0,3,10]), pop:mk([6,12])}}
 };
 function gvNormalize(){
   TRACKS.forEach(t=>{ if(!PAT[t.key])PAT[t.key]=new Array(STEPS).fill(false); });
 }
 segButtons($("#gv-presets"),Object.keys(PRESETS).map(k=>({key:k,label:PRESETS[k].label})),(k)=>{
-  PAT=JSON.parse(JSON.stringify(PRESETS[k].pat));
+  const p=PRESETS[k];
+  PAT=JSON.parse(JSON.stringify(p.pat));
   gvNormalize();
+  if(p.bpm!==undefined){ $("#gv-bpm").value=p.bpm; $("#gv-bpmv").textContent=p.bpm; }
+  if(p.swing!==undefined){ $("#gv-swing").value=p.swing; $("#gv-swingv").textContent=p.swing+"%"; }
   gvPaint();
 });
 
