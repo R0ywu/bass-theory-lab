@@ -2,6 +2,7 @@
 const TRACKS=[
   {key:"hho",  label:"HH Open",  color:"#b78cf7", play:()=>AudioEngine.drum(null,"hho")},
   {key:"hhc",  label:"HH Close", color:"#4fc3f7", play:()=>AudioEngine.drum(null,"hhc")},
+  {key:"hhp",  label:"HH Pedal", color:"#4fd7c3", play:()=>AudioEngine.drum(null,"hhp")},
   {key:"snare",label:"Snare",    color:"#ef8a8a", play:()=>AudioEngine.drum(null,"snare")},
   {key:"kick", label:"Kick",     color:"#f5a623", play:()=>AudioEngine.drum(null,"kick")},
   {key:"bass", label:"Bass 根音", color:"#66d9a3", play:()=>AudioEngine.bass(gvBassNote(),null,0.3,0.9)}
@@ -104,11 +105,15 @@ const PRESETS={
     hho:mk([2,6,10,14]), hhc:mk([0,4,8,12]),
     snare:mk([4,12]), kick:mk([0,4,8,12]), bass:mk([0,2,4,6,8,10,12,14])}},
   half:{label:"Half-time 慢搖",pat:{
-    hho:mk([14]), hhc:mk([0,2,4,6,8,10,12]),
+    hho:mk([14]), hhc:mk([0,2,4,6,8,10,12]), hhp:mk([4,12]),
     snare:mk([8]), kick:mk([0,10]), bass:mk([0,10])}}
 };
+function gvNormalize(){
+  TRACKS.forEach(t=>{ if(!PAT[t.key])PAT[t.key]=new Array(STEPS).fill(false); });
+}
 segButtons($("#gv-presets"),Object.keys(PRESETS).map(k=>({key:k,label:PRESETS[k].label})),(k)=>{
   PAT=JSON.parse(JSON.stringify(PRESETS[k].pat));
+  gvNormalize();
   gvPaint();
 });
 

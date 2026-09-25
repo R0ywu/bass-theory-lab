@@ -526,16 +526,18 @@ const AudioEngine = (() => {
       const g=c.createGain();
       g.gain.setValueAtTime(0.9,t); g.gain.exponentialRampToValueAtTime(0.0001,t+0.22);
       o.connect(g); g.connect(master); o.start(t); o.stop(t+0.25);
-    }else if(kind==="hhc"||kind==="hho"){
-      const dur = kind==="hho"? 0.38 : 0.06;
+    }else if(kind==="hhc"||kind==="hho"||kind==="hhp"){
+      /* hhc=閉合鈸(手) hho=開放鈸 hhp=踩鈸(腳踏, 較悶較短) */
+      const dur = kind==="hho"? 0.38 : (kind==="hhp"? 0.045 : 0.06);
       const len=Math.ceil(c.sampleRate*(dur+0.02));
       const buf=c.createBuffer(1,len,c.sampleRate);
       const d=buf.getChannelData(0);
       for(let i=0;i<len;i++) d[i]=Math.random()*2-1;
       const src=c.createBufferSource(); src.buffer=buf;
-      const hp=c.createBiquadFilter(); hp.type="highpass"; hp.frequency.value=7500;
+      const hp=c.createBiquadFilter(); hp.type="highpass";
+      hp.frequency.value = kind==="hhp"? 4800 : 7500;
       const g=c.createGain();
-      const pk = kind==="hho"? 0.20 : 0.24;
+      const pk = kind==="hho"? 0.20 : (kind==="hhp"? 0.16 : 0.24);
       g.gain.setValueAtTime(pk,t);
       g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
       src.connect(hp); hp.connect(g); g.connect(master);
